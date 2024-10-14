@@ -1,19 +1,19 @@
 <?php
 // Update job Details
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
-    $id = $_POST["jobTitle"];
+    $jobID = $_POST["jobTitle"];
     $newStatus = $_POST["newStatus"];
     $newLocation = $_POST["newLocation"];
     $comments = $_POST["comments"];
     require_once "inc/dbconn.inc.php";
 
     // Use a prepared statement to prevent injection attacks
-    $sql = "UPDATE ProductionOperatorRole SET status=?, location=?, comments=? WHERE id=?;";
+    $sql = "UPDATE ProductionOperatorRole SET status=?, location=?, comments=? WHERE jobID=?;";
     $statement = mysqli_stmt_init($conn);
 
 
     if (mysqli_stmt_prepare($statement, $sql)) {
-        mysqli_stmt_bind_param($statement, 'sssi', $newStatus, $newLocation, $comments, $id);
+        mysqli_stmt_bind_param($statement, 'sssi', $newStatus, $newLocation, $comments, $jobID);
 
         if (mysqli_stmt_execute($statement)) {
             // Task updated successfully. Redirect to jobs page.
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                     <?php
                     require_once "inc/dbconn.inc.php";
 
-                    $sql = "SELECT id, jobTitle, status, location, date, comments FROM ProductionOperatorRole;";
+                    $sql = "SELECT jobID, jobTitle, status, location, date, comments FROM ProductionOperatorRole;";
 
                     if ($result = mysqli_query($conn, $sql)) {
                         if (mysqli_num_rows($result) > 0) {
