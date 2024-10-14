@@ -35,7 +35,7 @@ fclose($csvFile);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Shay Yanchman">
     <title>Factory Management Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Styles/styles.css">
 </head>
 <body>
 <div class="container">
