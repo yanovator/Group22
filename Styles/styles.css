@@ -1,3 +1,68 @@
-body{
-    background-color: yellow;
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+form input, button {
+    padding: 10px;
+    margin: 5px;
+    display: inline-block;
+}
+
+form button {
+    cursor: pointer;
+    background-color: #808080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #808080;
+    color: white;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+thead {
+    display: table-header-group;
+    position: sticky;
+    top: 0px;
+    width: 100%;
+}
+
+tbody {
+    overflow-y: scroll;
 }
