@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator - Factory Overview</title>
+    <link rel="stylesheet" href="./Styles/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Administrator Dashboard</h1>
+        <div class="notification">
+            <img src="images/bell.jpg" alt="Notifications" class="bell-icon">
+            <span class="notification-count">2</span>
+        </div>
+        <div class="user-info">
+            <span>John Doe</span>
+            <span class="user-role">Administrator</span>
+        </div>
+    </header>
+
+    <nav>
+        <ul class="nav-menu">
+            <li><a href="Administrator.html" class="active"><img src="images/home.png" alt="Home"> Home</a></li>
+            <li><a href="performance.html"><img src="images/performance.png" alt="Factory Performance"> Performance</a></li>
+            <li><a href="employees.php"><img src="images/employees.png" alt="Employees"> Employees</a></li>
+            <li><a href="inbox.html"><img src="images/inbox.png" alt="Inbox"> Inbox</a></li>
+            <li><a href="events.html"><img src="images/calendar.jpg" alt="Events"> Events</a></li>
+            <li><a href="settings.html"><img src="images/settings.png" alt="Settings"> Settings</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Welcome, Administrator John Doe</h2>
+
+        <!-- Factory Overview Section -->
+        <section class="factory-overview">
+            <h3>Factory Overview</h3>
+            <div class="overview-cards">
+                <div class="card">
+                    <h4>Production Output</h4>
+                    <p>Current Output: 1,200 units/day</p>
+                    <p>Monthly Target: 30,000 units</p>
+                    <a href="production-details.html">View Production Details</a>
+                </div>
+                <div class="card">
+                    <h4>Equipment Status</h4>
+                    <p>Operational: 95%</p>
+                    <p>Maintenance Required: 2 Machines</p>
+                    <a href="maintenance.html">View Maintenance Log</a>
+                </div>
+                <div class="card">
+                    <h4>Energy Consumption</h4>
+                    <p>Today's Usage: 450 kWh</p>
+                    <p>Monthly Goal: 12,000 kWh</p>
+                    <a href="energy-usage.html">Energy Usage Details</a>
+                </div>
+                <div class="card">
+                    <h4>Recent Activity</h4>
+                    <p>Last Machine Calibration: 2 hours ago</p>
+                    <p>Shift Completed: Morning Shift</p>
+                    <a href="activity-log.html">View Activity Log</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Summary Section -->
+        <section class="performance-summary">
+            <h3>Factory Performance</h3>
+            <p>Current Efficiency: 88%</p>
+            <p>Production Line Speed: 105 units/hour</p>
+            <p>Downtime: 3 hours this week</p>
+            <a href="performance.html">View Full Performance Report</a>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Factory Management System</p>
+    </footer>
+
+    <script src="./Scripts/scripts.js"></script>
+</body>
+</html>
