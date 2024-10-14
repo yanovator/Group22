@@ -79,22 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                                 echo "<td>" . htmlspecialchars($row["location"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["date"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["comments"] ?? '') . "</td>";
-                                // echo "<td><button class='update-button'>Update</button></td>";
-                                // form appears within the table
-                                // echo "<td>
-                                //         <form id='jobUpdateForm" . "' method='post'>
-                                //             <input type='hidden' name='jobTitle' value='" . htmlspecialchars($row["jobID"]) . "'>
-                                //             <select name='newStatus'>
-                                //                 <option value=''>Select Status</option>
-                                //                 <option value='In Progress'>In Progress</option>
-                                //                 <option value='Completed'>Completed</option>
-                                //                 <option value='Waiting Parts'>Waiting Parts</option>
-                                //             </select>
-                                //             <input type='text' name='newLocation' placeholder='New Location'>
-                                //             <input type='text' name='comments' placeholder='Comments'>
-                                //             <button type='submit' class='update-button'>Update</button>
-                                //         </form>
-                                //       </td>";
                                 echo "<td>
                                 <button class='open-modal' data-id='" . htmlspecialchars($row["jobID"]) . "' data-title='" . htmlspecialchars($row["jobTitle"]) . "'>Update</button>
                                 </td>";
