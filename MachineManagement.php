@@ -107,8 +107,9 @@ fclose($csvFile);
             <input type="text" id="new-machine-name" placeholder="Machine Name" required>
             <input type="text" id="new-machine-op" placeholder="Operator" required>
             <select id="new-machine-status">
-                <option value="Online">Online</option>
-                <option value="Offline">Offline</option>
+                <option value="active">active</option>
+                <option value="idle">idle</option>
+                <option value="maintenance">maintenance</option>
             </select>
             <button type="button" id="add-machine-btn">Add Machine</button>
         </form>
