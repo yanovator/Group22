@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
             // Task updated successfully. Redirect to jobs page.
             echo "Job successfully updated.";
             header("Location: jobs.php");
-            exit;
+            // exit;
         } else {
             echo "Error updating record: " . mysqli_error($conn);
         }
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
     <meta charset="UTF-8">
     <meta name="author" content="Belinda Hok"/>
     <link rel="stylesheet" href="styles/style.css">
-    <!-- <script src="scripts/jobsscript.js" defer></script> -->
+    <script src="scripts/jobsscript.js" defer></script>
 </head>
 
 <body>
@@ -74,26 +74,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row["jobTitle"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["status"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["location"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["date"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["comments"]) . "</td>";
+                                echo "<td>" . htmlspecialchars($row["jobTitle"] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($row["status"] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($row["location"] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($row["date"] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($row["comments"] ?? '') . "</td>";
                                 // echo "<td><button class='update-button'>Update</button></td>";
+                                // form appears within the table
+                                // echo "<td>
+                                //         <form id='jobUpdateForm" . "' method='post'>
+                                //             <input type='hidden' name='jobTitle' value='" . htmlspecialchars($row["jobID"]) . "'>
+                                //             <select name='newStatus'>
+                                //                 <option value=''>Select Status</option>
+                                //                 <option value='In Progress'>In Progress</option>
+                                //                 <option value='Completed'>Completed</option>
+                                //                 <option value='Waiting Parts'>Waiting Parts</option>
+                                //             </select>
+                                //             <input type='text' name='newLocation' placeholder='New Location'>
+                                //             <input type='text' name='comments' placeholder='Comments'>
+                                //             <button type='submit' class='update-button'>Update</button>
+                                //         </form>
+                                //       </td>";
                                 echo "<td>
-                                        <form method='post'>
-                                            <input type='hidden' name='jobTitle' value='" . htmlspecialchars($row["id"]) . "'>
-                                            <select name='newStatus'>
-                                                <option value=''>Select Status</option>
-                                                <option value='In Progress'>In Progress</option>
-                                                <option value='Completed'>Completed</option>
-                                                <option value='Waiting Parts'>Waiting Parts</option>
-                                            </select>
-                                            <input type='text' name='newLocation' placeholder='New Location'>
-                                            <input type='text' name='comments' placeholder='Comments'>
-                                            <button type='submit' class='update-button'>Update</button>
-                                        </form>
-                                      </td>";
+                                <button class='open-modal' data-id='" . htmlspecialchars($row["jobID"]) . "' data-title='" . htmlspecialchars($row["jobTitle"]) . "'>Update</button>
+                                </td>";
                                 echo "</tr>";
                             }
 
@@ -113,6 +117,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                     ?>
                 </tbody>
             </table>
+        </div>
+
+
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Update Job</h2>
+                <form id="updateForm" method='post'>
+                    <input type='hidden' name='jobTitle' id='jobTitle'>
+                    <select name='newStatus' id='newStatus'>
+                        <option value=''>Select Status</option>
+                        <option value='In Progress'>In Progress</option>
+                        <option value='Completed'>Completed</option>
+                        <option value='Waiting Parts'>Waiting Parts</option>
+                    </select>
+                    <input type='text' name='newLocation' placeholder='New Location' id='newLocation'>
+                    <input type='text' name='comments' placeholder='Comments' id='comments'>
+                    <button type='submit' class='update-button'>Update</button>
+                </form>
+            </div>
         </div>
 
 
