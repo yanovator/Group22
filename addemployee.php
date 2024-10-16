@@ -33,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Callum Forbes">
     <title>Add New Employee</title>
     <link rel="stylesheet" href="./Styles/styles.css">
 </head>

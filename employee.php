@@ -46,6 +46,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Callum Forbes">
     <title>Employees</title>
     <link rel="stylesheet" href="./Styles/styles.css">
 </head>
