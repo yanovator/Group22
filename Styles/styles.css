@@ -66,3 +66,220 @@ thead {
 tbody {
     overflow-y: scroll;
 }
+
+/* Header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-left: 60px; 
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Notification bell image styling */
+.bell-icon {
+    width: 40px;
+    height: auto;
+}
+
+.notification {
+    position: relative;
+    margin-right: -1000px;
+    cursor: pointer;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.notification:hover .bell-icon {
+    opacity: 0.7;
+}
+
+.user-info {
+    text-align: right;
+}
+
+.user-info span {
+    display: block;
+}
+
+.user-role {
+    font-size: 12px;
+    color: gray;
+}
+
+/* Nav styling */
+nav {
+    background-color: #2C3E50;
+    width: 80px; 
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 20px 0;
+}
+
+.nav-menu li {
+    margin: 20px 0;
+}
+
+.nav-menu li a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+.nav-menu li a img {
+    width: 40px; 
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: grayscale(100%); 
+    transition: filter 0.3s ease;
+}
+
+.nav-menu li a:hover img,
+.nav-menu li a.active img {
+    filter: none; 
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.search-add {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    padding: 10px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-button {
+    padding: 10px 20px;
+    background-color: #1ABC9C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    background-color: #16a085;
+}
+
+/* Employee table styling */
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.employee-table th, .employee-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.employee-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.employee-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Select dropdown for roles */
+select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input:checked + .slider {
+    background-color: #1ABC9C;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* Edit button */
+.edit-button {
+    padding: 5px 10px;
+    background-color: #3498DB;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: #2980b9;
+}
+
+.delete-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.trash-icon {
+    width: 18px;
+    height: auto;
+}
+
+.delete-button:hover .trash-icon {
+    opacity: 0.7;
+}
