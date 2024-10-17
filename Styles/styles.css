@@ -304,3 +304,57 @@ input:checked + .slider:before {
 .delete-button:hover .trash-icon {
     opacity: 0.7;
 }
+
+/* Carousel Styling */
+.carousel {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.carousel-item {
+    min-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 3rem;
+    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Darken button on hover */
+}
+
+.carousel-button.prev {
+    left: -60px; /* Position the left button outside the carousel */
+}
+
+.carousel-button.next {
+    right: -60px; /* Position the right button outside the carousel */
+}
+
+#carouselInner {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
