@@ -190,6 +190,7 @@ factory manager page to-do:
                                     <th>Machine Name</th>
                                     <th>Error Code</th>
                                     <th>Maintenance Log</th>
+                                    <th>Update Machine</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -197,8 +198,21 @@ factory manager page to-do:
                                     <tr>
                                         <td><?php echo $row['machine_id']; ?></td>
                                         <td><?php echo $row['machine_name']; ?></td>
-                                        <td><?php echo $row['error_code']; ?></td>
-                                        <td><?php echo $row['maintenance_log']; ?></td>
+                                        <form action="Database/update_codes.php" method="POST">
+                                            <input type="hidden" name="machine_id" value="<?php echo htmlspecialchars($row['machine_id']); ?>">
+                                            <td>
+                                                <select name="errorCode_<?php echo htmlspecialchars($row['machine_id']); ?>">
+                                                    <option value="E101" <?php echo ($row['error_code'] === 'E101') ? 'selected' : ''; ?>>E101</option>
+                                                    <option value="E202" <?php echo ($row['error_code'] === 'E202') ? 'selected' : ''; ?>>E202</option>
+                                                    <option value="E303" <?php echo ($row['error_code'] === 'E303') ? 'selected' : ''; ?>>E303</option>
+                                                    <option value="E404" <?php echo ($row['error_code'] === 'E404') ? 'selected' : ''; ?>>E404</option>
+                                                </select>
+                                            </td>
+                                            <td><?php echo $row['maintenance_log']; ?></td>
+                                            <td>
+                                                <button type="submit" name="update" id="update-btn">Update</button>
+                                            </td>
+                                        </form>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
