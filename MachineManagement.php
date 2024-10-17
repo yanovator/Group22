@@ -96,22 +96,34 @@ factory manager page to-do:
                             </thead>
                             <tbody id="machine-list">
                                 <?php foreach ($machineData as $row): ?>
-                                    <tr>
-                                        <td><?php echo $row['machine_id']; ?></td>
-                                        <td><?php echo $row['machine_name']; ?></td>
-                                        <td><input type="text" value="" placeholder="operator name"></td>
-                                        <td>
-                                            <select class="edit-machine-status">
-                                                <option value="active" <?= $row['status'] == 'active' ? 'selected' : '' ?>>active</option>
-                                                <option value="idle" <?= $row['status'] == 'idle' ? 'selected' : '' ?>>idle</option>
-                                                <option value="maintenance" <?= $row['status'] == 'maintenance' ? 'selected' : '' ?>>maintenance</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <button class="update-machine-btn">Update</button>
-                                            <button class="delete-machine-btn">Delete</button>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($row['machine_id']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['machine_name']); ?></td>
+                                    <td>
+                                        <input type="text" name="operator_<?php echo htmlspecialchars($row['machine_id']); ?>" 
+                                            placeholder="<?php echo empty($row['operator']) ? 'Assign Operator' : htmlspecialchars($row['operator']); ?>" 
+                                            value="<?php echo htmlspecialchars($row['operator'] ?? ''); ?>" />
+                                    </td>
+                                    <td>
+                                        <select name="status_<?php echo htmlspecialchars($row['machine_id']); ?>">
+                                            <option value="active" <?php echo ($row['status'] === 'active') ? 'selected' : ''; ?>>Active</option>
+                                            <option value="inactive" <?php echo ($row['status'] === 'inactive') ? 'selected' : ''; ?>>Idle</option>
+                                            <option value="maintenance" <?php echo ($row['status'] === 'maintenance') ? 'selected' : ''; ?>>Maintenance</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <!-- Update form -->
+                                        <form method="POST" action="Database/update_machine.php" style="display:inline;">
+                                            <input type="hidden" name="machine_id" value="<?php echo htmlspecialchars($row['machine_id']); ?>">
+                                            <button type="submit" name="update" id="update-btn" value="<?php echo htmlspecialchars($row['machine_id']); ?>">Update</button>
+                                        </form>
+                                        <!-- Delete form -->
+                                        <form method="POST" action="Database/delete_machine.php" style="display:inline;">
+                                            <input type="hidden" name="machine_id" value="<?php echo htmlspecialchars($row['machine_id']); ?>">
+                                            <input type="submit" value="Delete" id="delete-btn" onclick="return confirm('Are you sure you want to delete this machine?');">
+                                        </form>
+                                    </td>
+                                </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
