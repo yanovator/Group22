@@ -23,6 +23,14 @@ try {
     echo "Error fetching machines: " . $e->getMessage();
 }
 
+// Fetch list of machines under maintenance
+try {
+    $sqlMaintenance = "SELECT * FROM machine_data WHERE status = 'maintenance'";
+    $stmtMaintenance = $pdo->query($sqlMaintenance);
+    $maintenanceData = $stmtMaintenance->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error fetching maintenance data: " . $e->getMessage();
+}
 ?>
 
 <!--
@@ -156,6 +164,34 @@ factory manager page to-do:
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <!-- Maintenance Section -->
+                <div class="carousel-item" style="overflow-y:auto;">
+                    <h2>Machines Under Maintenance</h2>
+                    <?php if (count($maintenanceData) > 0): ?>
+                        <table id="maintenance-table">
+                            <thead>
+                                <tr>
+                                    <th>Machine ID</th>
+                                    <th>Machine Name</th>
+                                    <th>Error Code</th>
+                                    <th>Maintenance Log</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($maintenanceData as $row): ?>
+                                    <tr>
+                                        <td><?php echo $row['machine_id']; ?></td>
+                                        <td><?php echo $row['machine_name']; ?></td>
+                                        <td><?php echo $row['error_code']; ?></td>
+                                        <td><?php echo $row['maintenance_log']; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p>No machines are currently under maintenance.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
