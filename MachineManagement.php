@@ -107,7 +107,7 @@ factory manager page to-do:
                                     <td>
                                         <select name="status_<?php echo htmlspecialchars($row['machine_id']); ?>">
                                             <option value="active" <?php echo ($row['status'] === 'active') ? 'selected' : ''; ?>>Active</option>
-                                            <option value="inactive" <?php echo ($row['status'] === 'inactive') ? 'selected' : ''; ?>>Idle</option>
+                                            <option value="inactive" <?php echo ($row['status'] === 'idle') ? 'selected' : ''; ?>>Idle</option>
                                             <option value="maintenance" <?php echo ($row['status'] === 'maintenance') ? 'selected' : ''; ?>>Maintenance</option>
                                         </select>
                                     </td>
