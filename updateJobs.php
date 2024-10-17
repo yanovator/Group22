@@ -40,23 +40,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Jobs</title>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Belinda Hok"/>
+    <title>Production Operator Jobs</title>
     <link rel="stylesheet" href="styles/style.css">
-    <script src="scripts/jobsscript.js" defer></script>
 </head>
 
 <body>
-    <?php require_once "inc/menu.inc.php";?>
+    <header>
+        <h1>List of Jobs</h1>
+        <div class="notification">
+            <img src="images/bell.jpg" alt="Notifications" class="bell-icon">
+            <span class="notification-count">2</span>
+        </div>
+        <div class="user-info">
+            <span>John Smith</span>
+            <span class="user-role">Production Operator</span>
+        </div>
+    </header>
+
+    <nav>
+        <ul class="nav-menu">
+            <li><a href="homeProductionOp.php" class="active"><img src="images/home.png" alt="Home"> </a></li>
+            <li><a href="#"><img src="images/performance.png" alt="Factory Performance"> </a></li>
+            <li><a href="updateMachines.php"><img src="images/machine.png" alt="Machine Management"> </a></li>
+            <li><a href="updateJobs.php"><img src="images/employees.png" alt="Job Management"> </a></li>
+            <li><a href="inbox.html"><img src="images/inbox.png" alt="Inbox"> </a></li>
+            <li><a href="events.html"><img src="images/calendar.png" alt="Events"> </a></li>
+            <li><a href="settings.html"><img src="images/settings.png" alt="Settings"> </a></li>
+        </ul>
+    </nav>
 
     <main>
-
         <div class="container">
             <h1>Update Jobs</h1>
             
@@ -83,7 +102,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
                                 echo "<td>" . htmlspecialchars($row["jobTitle"] ?? '') . "</td>";
-                                echo "<td>" . htmlspecialchars($row["jobStatus"] ?? '') . "</td>";
+                                $statusClass = "";
+                                switch ($row["jobStatus"]) {
+                                    case 'In Progress':
+                                        $statusClass = "job-status-in-progress";
+                                        break;
+                                    case 'Completed':
+                                        $statusClass = "job-status-completed";
+                                        break;
+                                    case 'Waiting Parts':
+                                        $statusClass = "job-status-waiting-parts";
+                                        break;
+                                }
+                                echo "<td class='$statusClass'>" . htmlspecialchars($row["jobStatus"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["location"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["date"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["jobComments"] ?? '') . "</td>";
@@ -108,8 +139,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                 </tbody>
             </table>
         </div>
-
-
 
         <div id="myModal" class="modal">
             <div class="modal-content">
@@ -136,9 +165,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                 </form>
             </div>
         </div>
-
-        
     </main>
+
+<script>
+    let modal = document.getElementById("myModal");
+
+    let span = document.getElementsByClassName("close")[0];
+
+    let buttons = document.querySelectorAll(".open-modal");
+
+    buttons.forEach(function(button) {
+        button.onclick = function() {
+            let jobID = this.getAttribute("data-id");
+            let jobTitle = this.getAttribute("data-title");
+
+            document.getElementById("jobTitle").value = jobID;
+
+            modal.style.display = "block";
+        };
+    });
+
+    // When the user clicks on "X", close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+</script>
 
 </body>
 </html>
