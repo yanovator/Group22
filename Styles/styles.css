@@ -430,3 +430,95 @@ button[type="submit"]:hover {
 .back-link:hover {
     text-decoration: underline;
 }
+
+/* Production operator styling */
+.prodOpContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 80vh; 
+}
+
+.prodOpNav {
+    display: inline-block; 
+    width: 30%; 
+    min-height: 30vh; 
+    padding: 20px; 
+    font-size: 25px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    background-color: #b8b8b8;
+    margin: 20px; 
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.4);
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px; 
+    transform: translate(0%, -30%);
+    label {
+        font-size: 20px;
+    }
+}
+
+#updateForm{
+    background-color: #ffffff;
+    margin: 0px;
+    padding: 0px;
+    width: 95%; 
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.close {   
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.job-status-in-progress,
+.machine-status-active {
+    background-color: green;
+}
+
+.job-status-completed {
+    background-color: rgb(23, 85, 255);
+}
+
+.job-status-waiting-parts,
+.machine-status-idle {
+    background-color: yellow;
+}
+
+.machine-status-maintenance {
+    background-color: red;
+}
