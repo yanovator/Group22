@@ -68,80 +68,120 @@ factory manager page to-do:
     </nav>
 
     <div class="FMcontainer">
-        <!-- Machine Performance Section -->
-        <section id="factory-performance">
-            <h2>Factory Performance</h2>
-            <div style="height: 160px; overflow-y:auto;">
-                <table id="performance-table">
-                    <thead>
-                        <tr>
-                            <th>Machine ID</th>
-                            <th>Machine Name</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($machineData as $row): ?>
-                            <tr>
-                                <td><?php echo $row['machine_id']; ?></td>
-                                <td><?php echo $row['machine_name']; ?></td>
-                                <td><?php echo $row['status']; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+        <div class="carousel">
+            <button class="carousel-button prev" onclick="moveCarousel(-1)">&#10094;</button>
+            <button class="carousel-button next" onclick="moveCarousel(1)">&#10095;</button>
+            <div class="carousel-inner" id="carouselInner">
+                <!-- Machine Management Section -->
+                <div class="carousel-item">
+                    <h2>Manage Machines</h2>
+                    <div style="height: 650px; overflow-y: auto;">
+                        <table id="machine-management-table">
+                            <thead>
+                                <tr>
+                                    <th>Machine ID</th>
+                                    <th>Machine Name</th>
+                                    <th>Machine Operator</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="machine-list">
+                                <?php foreach ($machineData as $row): ?>
+                                    <tr>
+                                        <td><?php echo $row['machine_id']; ?></td>
+                                        <td><?php echo $row['machine_name']; ?></td>
+                                        <td><input type="text" value="" placeholder="operator name"></td>
+                                        <td>
+                                            <select class="edit-machine-status">
+                                                <option value="active" <?= $row['status'] == 'active' ? 'selected' : '' ?>>active</option>
+                                                <option value="idle" <?= $row['status'] == 'idle' ? 'selected' : '' ?>>idle</option>
+                                                <option value="maintenance" <?= $row['status'] == 'maintenance' ? 'selected' : '' ?>>maintenance</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button class="update-machine-btn">Update</button>
+                                            <button class="delete-machine-btn">Delete</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Form to Add New Machine -->
+                    <form id="add-machine-form" method="post">
+                        <input type="text" id="new-machine-id" placeholder="Machine ID" required>
+                        <input type="text" id="new-machine-name" placeholder="Machine Name" required>
+                        <input type="text" id="new-machine-op" placeholder="Operator" required>
+                        <select id="new-machine-status">
+                            <option value="active">active</option>
+                            <option value="idle">idle</option>
+                            <option value="maintenance">maintenance</option>
+                        </select>
+                        <button type="button" id="add-machine-btn">Add Machine</button>
+                    </form>
+                </div>
+                <!-- Machine Performance Section -->
+                <div class="carousel-item" style="overflow-y:auto;">
+                    <h2>Factory Performance</h2>
+                    <div style="height: 650px; overflow-y: auto;">
+                        <table id="performance-table">
+                            <thead>
+                                <tr>
+                                    <th>Machine ID</th>
+                                    <th>Machine Name</th>
+                                    <th>Temperature</th>
+                                    <th>Pressure</th>
+                                    <th>Vibration</th>
+                                    <th>Humidity</th>
+                                    <th>Power Consumption</th>
+                                    <th>Production Count</th>
+                                    <th>Speed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($machineData as $row): ?>
+                                    <tr>
+                                        <td><?php echo $row['machine_id']; ?></td>
+                                        <td><?php echo $row['machine_name']; ?></td>
+                                        <td><?php echo $row['temperature']; ?></td>
+                                        <td><?php echo $row['pressure']; ?></td>
+                                        <td><?php echo $row['vibration']; ?></td>
+                                        <td><?php echo $row['humidity']; ?></td>
+                                        <td><?php echo $row['power_consumption']; ?></td>
+                                        <td><?php echo $row['production_count']; ?></td>
+                                        <td><?php echo $row['speed']; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </section>
-        <!-- Machine Management Section -->
-        <section id="machine-management">
-            <h2>Manage Machines</h2>
-            <div style="height: 450px; overflow-y: auto;">
-                <table id="machine-management-table">
-                    <thead>
-                        <tr>
-                            <th>Machine ID</th>
-                            <th>Machine Name</th>
-                            <th>Machine Operator</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="machine-list">
-                        <?php foreach ($machineData as $row): ?>
-                            <tr>
-                                <td><?php echo $row['machine_id']; ?></td>
-                                <td><?php echo $row['machine_name']; ?></td>
-                                <td><input type="text" value="" placeholder="operator name"></td>
-                                <td>
-                                    <select class="edit-machine-status">
-                                        <option value="active" <?= $row['status'] == 'active' ? 'selected' : '' ?>>active</option>
-                                        <option value="idle" <?= $row['status'] == 'idle' ? 'selected' : '' ?>>idle</option>
-                                        <option value="maintenance" <?= $row['status'] == 'maintenance' ? 'selected' : '' ?>>maintenance</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button class="update-machine-btn">Update</button>
-                                    <button class="delete-machine-btn">Delete</button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Form to Add New Machine -->
-            <form id="add-machine-form" method="post">
-                <input type="text" id="new-machine-id" placeholder="Machine ID" required>
-                <input type="text" id="new-machine-name" placeholder="Machine Name" required>
-                <input type="text" id="new-machine-op" placeholder="Operator" required>
-                <select id="new-machine-status">
-                    <option value="active">active</option>
-                    <option value="idle">idle</option>
-                    <option value="maintenance">maintenance</option>
-                </select>
-                <button type="button" id="add-machine-btn">Add Machine</button>
-            </form>
-        </section>
+        </div>
     </div>
 <script src="script.js"></script>
+<script>
+    let currentIndex = 0;
+
+    function moveCarousel(direction) {
+        const carouselInner = document.getElementById('carouselInner');
+        const items = document.querySelectorAll('.carousel-item');
+        const totalItems = items.length;
+
+        currentIndex += direction;
+
+        // Loop through the carousel items
+        if (currentIndex < 0) {
+            currentIndex = totalItems - 1; // Go to the last item
+        } else if (currentIndex >= totalItems) {
+            currentIndex = 0; // Go to the first item
+        }
+
+        // Move the carousel to show the correct item
+        carouselInner.style.transform = 'translateX(' + (-currentIndex * 100) + '%)';
+    }
+</script>
+
 </body>
 </html>
