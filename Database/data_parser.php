@@ -30,8 +30,7 @@ if (($handle = fopen($csvFile, 'r')) !== false) {
             $machineID = $existingMachineID;
         }
 
-        if (!isset($latestEntries[$machineName]) || 
-            $latestEntries[$machineName]['status'] !== $status) {
+        if (!isset($latestEntries[$machineName]) || true) {
             $latestEntries[$machineName] = [
                 'machine_id' => $machineID,
                 'machine_name' => $machineName,
