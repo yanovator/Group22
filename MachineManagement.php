@@ -224,7 +224,6 @@ factory manager page to-do:
             </div>
         </div>
     </div>
-<script src="script.js"></script>
 <script>
     let currentIndex = 0;
 
