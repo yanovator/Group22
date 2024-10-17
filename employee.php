@@ -78,7 +78,7 @@ $result = $conn->query($sql);
 
         <div class="search-add">
             <input type="text" placeholder="Search" class="search-bar">
-            <a href="AddEmployee.php">
+            <a href="addemployee.php">
                 <button class="add-button">Add New Employee</button>
             </a>
         </div>
@@ -103,7 +103,7 @@ $result = $conn->query($sql);
                         echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
                         echo "<td>" . htmlspecialchars($row["role"]) . "</td>";
                         echo "<td>" . htmlspecialchars($row["email"]) . "</td>";
-                        echo "<td><button class='edit-button'>Edit</button></td>";
+                        echo "<td><a href='editemployee.php?id=" . htmlspecialchars($row["id"]) . "' class='edit-button'>Edit</a></td>";
                         echo "<td>
                                 <form action='employees.php' method='POST' style='display:inline-block;'>
                                     <input type='hidden' name='delete_id' value='" . htmlspecialchars($row["id"]) . "'>

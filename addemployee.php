@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ul class="nav-menu">
             <li><a href="Administrator.html" class="active"><img src="images/home.png" alt="Home"></a></li>
             <li><a href="#" class="active"><img src="images/performance.png" alt="Factory Performance"></a></li>
-            <li><a href="employees.php"><img src="images/employees.png" alt="Employees"></a></li>
+            <li><a href="employee.php"><img src="images/employees.png" alt="Employees"></a></li>
             <li><a href="#" class="active"><img src="images/inbox.png" alt="Inbox"></a></li>
             <li><a href="#" class="active"><img src="images/calendar.jpg" alt="Events"></a></li>
             <li><a href="#" class="active"><img src="images/settings.png" alt="Settings"></a></li>
@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit">Add Employee</button>
         </form>
-        <a href="employees.php" class="back-link">Back to Employee List</a>
+        <a href="employee.php" class="back-link">Back to Employee List</a>
     </div>
 </main>
 </body>
