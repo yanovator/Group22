@@ -36,8 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
     }
 }
 
-// Fetch employee data
-$sql = "SELECT id, name, role FROM employees";
+// Fetch employee data including email
+$sql = "SELECT id, name, role, email FROM employees";
 $result = $conn->query($sql);
 ?>
 
@@ -46,7 +46,6 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Callum Forbes">
     <title>Employees</title>
     <link rel="stylesheet" href="./Styles/styles.css">
 </head>
@@ -66,11 +65,11 @@ $result = $conn->query($sql);
     <nav>
         <ul class="nav-menu">
             <li><a href="Administrator.html" class="active"><img src="images/home.png" alt="Home"></a></li>
-            <li><a href="#" class="active"><img src="images/performance.png" alt="Fractory Performance"></a></li>
+            <li><a href="#" class="active"><img src="images/performance.png" alt="Factory Performance"></a></li>
             <li><a href="employees.php"><img src="images/employees.png" alt="Employees"></a></li>
             <li><a href="#" class="active"><img src="images/inbox.png" alt="Inbox"></a></li>
             <li><a href="#" class="active"><img src="images/calendar.jpg" alt="Events"></a></li>
-            <li><a href="#" class="active"><img src="images/settings.png" alt="settings"></a></li>
+            <li><a href="#" class="active"><img src="images/settings.png" alt="Settings"></a></li>
         </ul>
     </nav>
 
@@ -89,8 +88,8 @@ $result = $conn->query($sql);
                 <tr>
                     <th>Name</th>
                     <th>ID</th>
-                    <th>Roles</th>
-                    <th>Status</th>
+                    <th>Role</th>
+                    <th>Email</th>
                     <th>Actions</th>
                     <th>Delete</th>
                 </tr>
@@ -103,12 +102,7 @@ $result = $conn->query($sql);
                         echo "<td>" . htmlspecialchars($row["name"]) . "</td>";
                         echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
                         echo "<td>" . htmlspecialchars($row["role"]) . "</td>";
-                        echo "<td>
-                                <label class='switch'>
-                                    <input type='checkbox' checked>
-                                    <span class='slider'></span>
-                                </label>
-                              </td>";
+                        echo "<td>" . htmlspecialchars($row["email"]) . "</td>";
                         echo "<td><button class='edit-button'>Edit</button></td>";
                         echo "<td>
                                 <form action='employees.php' method='POST' style='display:inline-block;'>
