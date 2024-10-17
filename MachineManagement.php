@@ -33,15 +33,6 @@ try {
 }
 ?>
 
-<!--
-factory manager page to-do:
-- deal with duplicate machines, PHP
-- have maintenance history table
-- have factory performance table
-- put table(s) in carousel to easily switch views
-- implement header w/ CSS
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
