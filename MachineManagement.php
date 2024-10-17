@@ -181,7 +181,7 @@ factory manager page to-do:
                 </div>
                 <!-- Maintenance Section -->
                 <div class="carousel-item" style="overflow-y:auto;">
-                    <h2>Machines Under Maintenance</h2>
+                    <h2>Machine Maintenance</h2>
                     <?php if (count($maintenanceData) > 0): ?>
                         <table id="maintenance-table">
                             <thead>
