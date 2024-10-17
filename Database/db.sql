@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS machine_data (
     power_consumption DECIMAL(8,2),
     production_count INT,
     speed DECIMAL(5,2),
+    operator VARCHAR(255) DEFAULT NULL,
     PRIMARY KEY (machine_id),
     UNIQUE (machine_id) 
 );
