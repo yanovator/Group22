@@ -91,7 +91,8 @@ factory manager page to-do:
                                     <th>Machine Name</th>
                                     <th>Machine Operator</th>
                                     <th>Status</th>
-                                    <th>Actions</th>
+                                    <th>Update Machine</th>
+                                    <th>Delete Machine</th>
                                 </tr>
                             </thead>
                             <tbody id="machine-list">
@@ -99,25 +100,27 @@ factory manager page to-do:
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['machine_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['machine_name']); ?></td>
+                                    <!-- Update form -->
+                                    <form action="Database/update_machine.php" method="POST">
+                                        <input type="hidden" name="machine_id" value="<?php echo htmlspecialchars($row['machine_id']); ?>">
+                                        <td>
+                                            <input type="text" name="operator_<?php echo htmlspecialchars($row['machine_id']); ?>" 
+                                                placeholder="<?php echo empty($row['operator']) ? 'Assign Operator' : htmlspecialchars($row['operator']); ?>" 
+                                                value="<?php echo htmlspecialchars($row['operator'] ?? ''); ?>" />
+                                        </td>
+                                        <td>
+                                            <select name="status_<?php echo htmlspecialchars($row['machine_id']); ?>">
+                                                <option value="active" <?php echo ($row['status'] === 'active') ? 'selected' : ''; ?>>Active</option>
+                                                <option value="inactive" <?php echo ($row['status'] === 'idle') ? 'selected' : ''; ?>>Idle</option>
+                                                <option value="maintenance" <?php echo ($row['status'] === 'maintenance') ? 'selected' : ''; ?>>Maintenance</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="submit" name="update" id="update-btn">Update</button>
+                                        </td>
+                                    </form>
+                                    <!-- Delete form -->
                                     <td>
-                                        <input type="text" name="operator_<?php echo htmlspecialchars($row['machine_id']); ?>" 
-                                            placeholder="<?php echo empty($row['operator']) ? 'Assign Operator' : htmlspecialchars($row['operator']); ?>" 
-                                            value="<?php echo htmlspecialchars($row['operator'] ?? ''); ?>" />
-                                    </td>
-                                    <td>
-                                        <select name="status_<?php echo htmlspecialchars($row['machine_id']); ?>">
-                                            <option value="active" <?php echo ($row['status'] === 'active') ? 'selected' : ''; ?>>Active</option>
-                                            <option value="inactive" <?php echo ($row['status'] === 'idle') ? 'selected' : ''; ?>>Idle</option>
-                                            <option value="maintenance" <?php echo ($row['status'] === 'maintenance') ? 'selected' : ''; ?>>Maintenance</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <!-- Update form -->
-                                        <form method="POST" action="Database/update_machine.php" style="display:inline;">
-                                            <input type="hidden" name="machine_id" value="<?php echo htmlspecialchars($row['machine_id']); ?>">
-                                            <button type="submit" name="update" id="update-btn" value="<?php echo htmlspecialchars($row['machine_id']); ?>">Update</button>
-                                        </form>
-                                        <!-- Delete form -->
                                         <form method="POST" action="Database/delete_machine.php" style="display:inline;">
                                             <input type="hidden" name="machine_id" value="<?php echo htmlspecialchars($row['machine_id']); ?>">
                                             <input type="submit" value="Delete" id="delete-btn" onclick="return confirm('Are you sure you want to delete this machine?');">
@@ -129,16 +132,15 @@ factory manager page to-do:
                         </table>
                     </div>
                     <!-- Form to Add New Machine -->
-                    <form id="add-machine-form" method="post">
-                        <input type="text" id="new-machine-id" placeholder="Machine ID" required>
-                        <input type="text" id="new-machine-name" placeholder="Machine Name" required>
-                        <input type="text" id="new-machine-op" placeholder="Operator" required>
-                        <select id="new-machine-status">
+                    <form id="add-machine-form" method="POST" action="Database/add_machine.php">
+                        <input type="text" id="new-machine-name" name="machine_name" placeholder="Machine Name" required>
+                        <input type="text" id="new-machine-op" name="operator" placeholder="Operator" required>
+                        <select id="new-machine-status" name="status">
                             <option value="active">active</option>
                             <option value="idle">idle</option>
                             <option value="maintenance">maintenance</option>
                         </select>
-                        <button type="button" id="add-machine-btn">Add Machine</button>
+                        <button type="submit" id="add-machine-btn">Add Machine</button>
                     </form>
                 </div>
                 <!-- Machine Performance Section -->
