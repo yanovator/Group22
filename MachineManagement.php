@@ -59,9 +59,10 @@ try {
         <ul class="nav-menu">
             <li><a href="Administrator.html" class="active"><img src="images/home.png" alt="Home"> </a></li>
             <li><a href="performance.html"><img src="images/performance.png" alt="Factory Performance"> </a></li>
+            <li><a href="MachineManagement.php"><img src="images/machine.png" alt="Machine Management"> </a></li>
             <li><a href="employees.php"><img src="images/employees.png" alt="Employees"> </a></li>
             <li><a href="inbox.html"><img src="images/inbox.png" alt="Inbox"> </a></li>
-            <li><a href="events.html"><img src="images/calendar.jpg" alt="Events"> </a></li>
+            <li><a href="events.html"><img src="images/calendar.png" alt="Events"> </a></li>
             <li><a href="settings.html"><img src="images/settings.png" alt="Settings"> </a></li>
         </ul>
     </nav>
