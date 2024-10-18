@@ -7,43 +7,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'] ?? '';
     $role = $_POST['role'] ?? '';
     $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $confirm_password = $_POST['confirm_password'] ?? '';
 
-    // Server-side validation for ID length (must be 8 digits)
-    if (!preg_match("/^\d{8}$/", $id)) {
-        die("<p>Error: Employee ID must be exactly 8 digits.</p>");
-    }
-
-    // Server-side validation for role (must be one of the predefined values)
-    $valid_roles = ['Administrator', 'Factory Manager', 'Production Operator', 'Auditor'];
-    if (!in_array($role, $valid_roles)) {
-        die("<p>Error: Invalid role selected.</p>");
-    }
-
-    // Database connection details
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "employee";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Insert employee details into the database
-    $sql = "INSERT INTO employees (name, id, role, email) VALUES ('$name', '$id', '$role', '$email')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "";
+    // Validate that passwords match
+    if ($password !== $confirm_password) {
+        echo "<p>Error: Passwords do not match.</p>";
     } else {
-        echo "<p>Error: " . $sql . "<br>" . $conn->error . "</p>";
-    }
+        // Hash the password for security
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Close connection
-    $conn->close();
+        // Database connection details
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "employee";
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Insert employee details into the database
+        $sql = "INSERT INTO employees (name, id, role, email, password) VALUES ('$name', '$id', '$role', '$email', '$hashed_password')";
+
+        // Close connection
+        $conn->close();
+    }
 }
 ?>
 
@@ -71,11 +64,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <nav>
         <ul class="nav-menu">
             <li><a href="Administrator.html" class="active"><img src="images/home.png" alt="Home"></a></li>
-            <li><a href="#" class="active"><img src="images/performance.png" alt="Factory Performance"></a></li>
-            <li><a href="employee.php"><img src="images/employees.png" alt="Employees"></a></li>
+            <li><a href="#" class="active"><img src="images/performance.png" alt="Fractory Performance"></a></li>
+            <li><a href="employees.php"><img src="images/employees.png" alt="Employees"></a></li>
             <li><a href="#" class="active"><img src="images/inbox.png" alt="Inbox"></a></li>
             <li><a href="#" class="active"><img src="images/calendar.jpg" alt="Events"></a></li>
-            <li><a href="#" class="active"><img src="images/settings.png" alt="Settings"></a></li>
+            <li><a href="#" class="active"><img src="images/settings.png" alt="settings"></a></li>
         </ul>
     </nav>
 
@@ -90,8 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group">
                 <label for="id">ID</label>
-                <input type="number" id="id" name="id" placeholder="8-digit ID" required
-                       minlength="8" maxlength="8" min="10000000" max="99999999">
+                <input type="number" id="id" name="id" placeholder="ID" required>
             </div>
 
             <div class="form-group">
@@ -110,10 +102,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="email" id="email" name="email" placeholder="Email" required>
             </div>
 
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+            </div>
+
             <button type="submit">Add Employee</button>
         </form>
-        <a href="employee.php" class="back-link">Back to Employee List</a>
+        <a href="employees.php" class="back-link">Back to Employee List</a>
     </div>
-</main>
+    </main>
 </body>
 </html>
