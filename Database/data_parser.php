@@ -30,8 +30,7 @@ if (($handle = fopen($csvFile, 'r')) !== false) {
             $machineID = $existingMachineID;
         }
 
-        if (!isset($latestEntries[$machineName]) || 
-            $latestEntries[$machineName]['status'] !== $status) {
+        if (!isset($latestEntries[$machineName]) || true) {
             $latestEntries[$machineName] = [
                 'machine_id' => $machineID,
                 'machine_name' => $machineName,
@@ -51,15 +50,11 @@ if (($handle = fopen($csvFile, 'r')) !== false) {
 
     fclose($handle);
 
-    // Debugging output to check latest entries before inserting
-    echo "<pre>";
-    print_r($latestEntries);
-    echo "</pre>";
-
     // Insert or update the latest entries into the database
     insertLatestEntries(array_values($latestEntries), $pdo);
 
-    echo "Data successfully imported from CSV into the database!";
+    header('Location: ../MachineManagement.php?status=added');
+    exit();
 } else {
     echo "Error opening the CSV file.";
 }
