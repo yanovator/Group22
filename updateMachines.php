@@ -86,6 +86,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
                     <tr>
                         <th>Machine</th>
                         <th>Status</th>
+                        <th>Created Date</th>
+                        <th>Updated Date</th>
                         <th>Comments</th>
                         <th>Action</th>
                     </tr>
@@ -95,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
                     <?php
                     require_once "inc/dbconn.inc.php";
 
-                    $sql = "SELECT machineID, machineTitle, machineStatus, machineComments FROM Machines;";
+                    $sql = "SELECT machineID, machineTitle, machineStatus, createdTime, updateTime, machineComments FROM Machines;";
 
                     if ($result = mysqli_query($conn, $sql)) {
                         if (mysqli_num_rows($result) > 0) {
@@ -115,6 +117,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
                                         break;
                                 }
                                 echo "<td class='$statusClass'>" . htmlspecialchars($row["machineStatus"] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($row["createdTime"] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($row["updateTime"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["machineComments"] ?? '') . "</td>";
                                 echo "<td>
                                 <button class='open-modal' data-id='" . htmlspecialchars($row["machineID"]) . "' data-title='" . htmlspecialchars($row["machineTitle"]) . "'>Update</button>

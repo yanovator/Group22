@@ -507,18 +507,18 @@ input, select, textarea {
 
 .job-status-in-progress,
 .machine-status-active {
-    background-color: green;
+    background-color: rgb(48, 179, 48);
 }
 
 .job-status-completed {
-    background-color: rgb(23, 85, 255);
+    background-color: rgb(44, 124, 253);
 }
 
 .job-status-waiting-parts,
 .machine-status-idle {
-    background-color: yellow;
+    background-color: rgb(251, 251, 55);
 }
 
 .machine-status-maintenance {
-    background-color: red;
+    background-color: rgb(255, 48, 48);
 }
