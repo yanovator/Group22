@@ -28,7 +28,6 @@ CREATE TABLE Jobs(
     jobTitle varchar(100) NOT NULL,
     jobStatus ENUM ('In Progress', 'Completed', 'Waiting Parts'),
     location varchar(100) NOT NULL,
-    date DATE NOT NULL,
     jobComments TEXT,
     createdTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updatedTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
