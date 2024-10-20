@@ -1,13 +1,10 @@
 <?php
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1); 
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
-    $machineID = $_POST["machineTitle"];
-    require_once "inc/dbconn.inc.php";
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machine_name"])) {
+    $machineID = $_POST["machine_name"];
+    require_once "inc/dbconn.inc.php";  ////////////// chnage database? ////////////////////
 
     // Get current values
-    $currentQuery = "SELECT machineStatus, machineComments FROM Machines WHERE machineID=?";
+    $currentQuery = "SELECT status, machineComments FROM machine_data WHERE machine_id=?";
     $stmt = mysqli_prepare($conn, $currentQuery);
     mysqli_stmt_bind_param($stmt, 'i', $machineID);
     mysqli_stmt_execute($stmt);
@@ -17,13 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
     mysqli_stmt_close($stmt);
 
     // Get new values or use current if empty
-    $newMachineStatus = !empty($_POST["newMachineStatus"]) ? $_POST["newMachineStatus"] : $currentValues['machineStatus'];
+    $newMachineStatus = !empty($_POST["newMachineStatus"]) ? $_POST["newMachineStatus"] : $currentValues['status'];
     $machineComments = !empty($_POST["machineComments"]) ? $_POST["machineComments"] : $currentValues['machineComments'];
 
     // Update machine details
-    $sql = "UPDATE Machines SET machineStatus=?, machineComments=? WHERE machineID=?;";
+    $sql = "UPDATE machine_data SET status=?, machineComments=? WHERE machine_id=?;";
     $statement = mysqli_stmt_init($conn);
-
 
     if (mysqli_stmt_prepare($statement, $sql)) {
         mysqli_stmt_bind_param($statement, 'ssi', $newMachineStatus, $machineComments, $machineID);
@@ -97,15 +93,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
                     <?php
                     require_once "inc/dbconn.inc.php";
 
-                    $sql = "SELECT machineID, machineTitle, machineStatus, createdTime, updateTime, machineComments FROM Machines;";
+                    $sql = "SELECT machine_id, machine_name, status, createdTime, updatedTime, machineComments FROM machine_data;";
 
                     if ($result = mysqli_query($conn, $sql)) {
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row["machineTitle"] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($row["machine_name"] ?? '') . "</td>";
                                 $statusClass = "";
-                                switch ($row["machineStatus"]) {
+                                switch ($row["status"]) {
                                     case 'Active':
                                         $statusClass = "machine-status-active";
                                         break;
@@ -116,12 +112,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
                                         $statusClass = "machine-status-maintenance";
                                         break;
                                 }
-                                echo "<td class='$statusClass'>" . htmlspecialchars($row["machineStatus"] ?? '') . "</td>";
+                                echo "<td class='$statusClass'>" . htmlspecialchars($row["status"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["createdTime"] ?? '') . "</td>";
-                                echo "<td>" . htmlspecialchars($row["updateTime"] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($row["updatedTime"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["machineComments"] ?? '') . "</td>";
                                 echo "<td>
-                                <button class='open-modal' data-id='" . htmlspecialchars($row["machineID"]) . "' data-title='" . htmlspecialchars($row["machineTitle"]) . "'>Update</button>
+                                <button class='open-modal' data-id='" . htmlspecialchars($row["machine_id"]) . "' data-title='" . htmlspecialchars($row["machine_name"]) . "'>Update</button>
                                 </td>";
                                 echo "</tr>";
                             }
@@ -175,21 +171,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
 
     buttons.forEach(function(button) {
         button.onclick = function() {
-            let jobID = this.getAttribute("data-id");
-            let jobTitle = this.getAttribute("data-title");
+            let machineID = this.getAttribute("data-id");
+            let machineTitle = this.getAttribute("data-title");
 
-            document.getElementById("machineTitle").value = jobID;
+            document.getElementById("machine_name").value = machineID;
 
             modal.style.display = "block";
         };
     });
 
-    // When the user clicks on "X", close the modal
     span.onclick = function() {
         modal.style.display = "none";
     };
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
