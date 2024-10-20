@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "No machine ID provided.";
     }
 
-    header('Location: ../MachineManagement.php?status=deleted');
+    header('Location: ../FactoryManager.php?status=deleted');
     exit();
 }
 ?>
