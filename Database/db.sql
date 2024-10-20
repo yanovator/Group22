@@ -12,6 +12,20 @@ CREATE TABLE IF NOT EXISTS machine_data (
     production_count INT,
     speed DECIMAL(5,2),
     operator VARCHAR(255) DEFAULT NULL,
+    machineComments TEXT,
+    createdTime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updateTime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (machine_id),
     UNIQUE (machine_id) 
 );
+
+CREATE TABLE Jobs(
+    jobID INT AUTO_INCREMENT PRIMARY KEY,
+    jobTitle varchar(100) NOT NULL,
+    jobStatus ENUM ('In Progress', 'Completed', 'Waiting Parts'),
+    location varchar(100) NOT NULL,
+    date DATE NOT NULL,
+    jobComments TEXT,
+    createdTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+) ;
