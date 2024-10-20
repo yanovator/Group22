@@ -53,7 +53,7 @@ if (($handle = fopen($csvFile, 'r')) !== false) {
     // Insert or update the latest entries into the database
     insertLatestEntries(array_values($latestEntries), $pdo);
 
-    header('Location: ../MachineManagement.php?status=added');
+    header('Location: ../FactoryManager.php?status=added');
     exit();
 } else {
     echo "Error opening the CSV file.";

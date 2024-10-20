@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare("INSERT INTO machine_data (machine_id, machine_name, operator, status) VALUES (?, ?, ?, ?)");
     $stmt->execute([$machineId, $machineName, $operator, $status]);
     
-    header('Location: ../MachineManagement.php?status=added');
+    header('Location: ../FactoryManager.php?status=added');
     exit();
 }
 

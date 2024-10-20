@@ -1,45 +1,40 @@
 <?php
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1); 
+require_once "Database/db_connect.php"; 
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
-    $machineID = $_POST["machineTitle"];
-    require_once "inc/dbconn.inc.php";
-
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineID"])) {
+    $machineID = $_POST["machineID"];
+    
     // Get current values
-    $currentQuery = "SELECT machineStatus, machineComments FROM Machines WHERE machineID=?";
-    $stmt = mysqli_prepare($conn, $currentQuery);
-    mysqli_stmt_bind_param($stmt, 'i', $machineID);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $currentValues = mysqli_fetch_assoc($result);
-
-    mysqli_stmt_close($stmt);
+    $currentQuery = "SELECT status, machineComments FROM machine_data WHERE machine_id=:machine_id";
+    $stmtCurrent = $pdo->prepare($currentQuery);
+    $stmtCurrent->bindParam(':machine_id', $machineID, PDO::PARAM_INT);
+    $stmtCurrent->execute();
+    $currentValues = $stmtCurrent->fetch(PDO::FETCH_ASSOC);
 
     // Get new values or use current if empty
-    $newMachineStatus = !empty($_POST["newMachineStatus"]) ? $_POST["newMachineStatus"] : $currentValues['machineStatus'];
+    $newMachineStatus = !empty($_POST["newMachineStatus"]) ? $_POST["newMachineStatus"] : $currentValues['status'];
     $machineComments = !empty($_POST["machineComments"]) ? $_POST["machineComments"] : $currentValues['machineComments'];
 
     // Update machine details
-    $sql = "UPDATE Machines SET machineStatus=?, machineComments=? WHERE machineID=?;";
-    $statement = mysqli_stmt_init($conn);
+    $sql = "UPDATE machine_data SET status=:status, machineComments=:machineComments WHERE machine_id=:machine_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':status', $newMachineStatus, PDO::PARAM_STR);
+    $stmt->bindParam(':machineComments', $machineComments, PDO::PARAM_STR);
+    $stmt->bindParam(':machine_id', $machineID, PDO::PARAM_INT);
 
-
-    if (mysqli_stmt_prepare($statement, $sql)) {
-        mysqli_stmt_bind_param($statement, 'ssi', $newMachineStatus, $machineComments, $machineID);
-
-        if (mysqli_stmt_execute($statement)) {
-            header("Location: updateMachines.php");
-        } else {
-            echo "Error updating record: " . mysqli_error($conn);
-        }
+    if ($stmt->execute()) {
+        header("Location: updateMachines.php");
+        exit();
     } else {
-        echo "SQL statement preparation failed.";
+        echo "Error updating record.";
     }
-
-    mysqli_stmt_close($statement);
-    mysqli_close($conn);
 }
+
+// Fetch machine data
+$sql = "SELECT machine_id, machine_name, status, createdTime, updatedTime, machineComments FROM machine_data";
+$stmtSQL = $pdo->prepare($sql);
+$stmtSQL->execute();
+$machines = $stmtSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -54,13 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
 
 <body>
     <header>
-        <h1>Update Machines</h1>
+        <h1>Machines</h1>
         <div class="notification">
             <img src="images/bell.jpg" alt="Notifications" class="bell-icon">
             <span class="notification-count">2</span>
         </div>
         <div class="user-info">
-            <span>John Smith</span>
+            <span>Brian Wessex</span>
             <span class="user-role">Production Operator</span>
         </div>
     </header>
@@ -79,60 +74,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
 
     <main>
         <div class="container">
-            <!-- <h1>Update Machines</h1> -->
+            <h2>Update Machines</h2>
             
             <table id="machinesTable">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Machine</th>
                         <th>Status</th>
+                        <th>Created Date</th>
+                        <th>Updated Date</th>
                         <th>Comments</th>
                         <th>Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <?php
-                    require_once "inc/dbconn.inc.php";
-
-                    $sql = "SELECT machineID, machineTitle, machineStatus, machineComments FROM Machines;";
-
-                    if ($result = mysqli_query($conn, $sql)) {
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row["machineTitle"] ?? '') . "</td>";
-                                $statusClass = "";
-                                switch ($row["machineStatus"]) {
-                                    case 'Active':
-                                        $statusClass = "machine-status-active";
-                                        break;
-                                    case 'Idle':
-                                        $statusClass = "machine-status-idle";
-                                        break;
-                                    case 'Maintenance':
-                                        $statusClass = "machine-status-maintenance";
-                                        break;
-                                }
-                                echo "<td class='$statusClass'>" . htmlspecialchars($row["machineStatus"] ?? '') . "</td>";
-                                echo "<td>" . htmlspecialchars($row["machineComments"] ?? '') . "</td>";
-                                echo "<td>
-                                <button class='open-modal' data-id='" . htmlspecialchars($row["machineID"]) . "' data-title='" . htmlspecialchars($row["machineTitle"]) . "'>Update</button>
-                                </td>";
-                                echo "</tr>";
+                <?php
+                    if ($machines) {
+                        foreach ($machines as $row) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row["machine_id"] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($row["machine_name"] ?? '') . "</td>";
+                            $statusClass = "";
+                            switch ($row["status"]) {
+                                case 'Active':
+                                    $statusClass = "machine-status-active";
+                                    break;
+                                case 'Idle':
+                                    $statusClass = "machine-status-idle";
+                                    break;
+                                case 'Maintenance':
+                                    $statusClass = "machine-status-maintenance";
+                                    break;
                             }
-
-                            mysqli_free_result($result);
-                        } 
-
-                        else {
-                            echo "<tr><td colspan='6'>No machines found.</td></tr>";
-                        } 
+                            echo "<td class='$statusClass'>" . htmlspecialchars($row["status"] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($row["createdTime"] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($row["updatedTime"] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($row["machineComments"] ?? '') . "</td>";
+                            echo "<td>
+                            <button class='open-modal' data-id='" . htmlspecialchars($row["machine_id"]) . "' data-title='" . htmlspecialchars($row["machine_name"]) . "'>Update</button>
+                            </td>";
+                            echo "</tr>";
+                        }
                     } else {
-                        echo "Error executing query: " . mysqli_error($conn);
+                        echo "<tr><td colspan='6'>No machines found.</td></tr>";
                     }
-                    
-                    mysqli_close($conn);
                     ?>
                 </tbody>
             </table>
@@ -143,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
                 <span class="close">&times;</span>
                 <h2>Update Machine</h2>
                 <form id="updateForm" method='post'>
-                    <input type='hidden' name='machineTitle' id='machineTitle'>
+                    <input type='hidden' name='machineID' id='machineID'>
 
                     <label for="updateMachineStatus">Status:</label>
                     <select name='newMachineStatus' id='newMachineStatus'>
@@ -164,28 +151,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
 
 <script>
     let modal = document.getElementById("myModal");
-
     let span = document.getElementsByClassName("close")[0];
-
     let buttons = document.querySelectorAll(".open-modal");
 
     buttons.forEach(function(button) {
         button.onclick = function() {
-            let jobID = this.getAttribute("data-id");
-            let jobTitle = this.getAttribute("data-title");
+            let machineID = this.getAttribute("data-id");
+            let machineTitle = this.getAttribute("data-title");
 
-            document.getElementById("machineTitle").value = jobID;
+            document.getElementById("machineID").value = machineID;
 
             modal.style.display = "block";
         };
     });
 
-    // When the user clicks on "X", close the modal
     span.onclick = function() {
         modal.style.display = "none";
     };
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";

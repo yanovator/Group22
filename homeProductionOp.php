@@ -16,7 +16,7 @@
             <span class="notification-count">2</span>
         </div>
         <div class="user-info">
-            <span>John Smith</span>
+            <span>Brian Wessex</span>
             <span class="user-role">Production Operator</span>
         </div>
     </header>
@@ -24,7 +24,7 @@
     <nav>
         <ul class="nav-menu">
             <li><a href="homeProductionOp.php" class="active"><img src="images/home.png" alt="Home"> </a></li>
-            <li><a href="#"><img src="images/performance.png" alt="Factory Performance"> </a></li>
+            <li><a href="index.php"><img src="images/performance.png" alt="Factory Performance"> </a></li>
             <li><a href="updateMachines.php"><img src="images/machine.png" alt="Machine Management"> </a></li>
             <li><a href="updateJobs.php"><img src="images/employees.png" alt="Job Management"> </a></li>
             <li><a href="inbox.html"><img src="images/inbox.png" alt="Inbox"> </a></li>
@@ -34,18 +34,28 @@
     </nav>
 
     <div class="prodOpContainer">
-        <input type="button" value="Manage Jobs" class="prodOpNav" id="btn-jobs">
+        <input type="button" value="Factory Performance" class="prodOpNav" id="btn-performance">
         <input type="button" value="Manage Machines" class="prodOpNav" id="btn-machines">
+        <input type="button" value="Manage Jobs" class="prodOpNav" id="btn-jobs">
+        <input type="button" value="Task Notes" class="prodOpNav" id="btn-notes">
     </div>
 </body>
 
 <script>
+    document.getElementById("btn-performance").onclick = function () {
+        location.href = "index.php";
+    };
+
     document.getElementById("btn-jobs").onclick = function () {
     location.href = "updateJobs.php";
     };
 
     document.getElementById("btn-machines").onclick = function () {
         location.href = "updateMachines.php";
+    };
+
+    document.getElementById("btn-notes").onclick = function () {
+        location.href = "create_note.php";
     };
 </script>
 </html>

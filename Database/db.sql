@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS factory_logs;
+
+USE factory_logs;
+
 CREATE TABLE IF NOT EXISTS machine_data (
     machine_id VARCHAR(10) NOT NULL,
     machine_name VARCHAR(100) NOT NULL,
@@ -12,6 +16,19 @@ CREATE TABLE IF NOT EXISTS machine_data (
     production_count INT,
     speed DECIMAL(5,2),
     operator VARCHAR(255) DEFAULT NULL,
+    machineComments TEXT,
+    createdTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (machine_id),
     UNIQUE (machine_id) 
 );
+
+CREATE TABLE Jobs(
+    jobID VARCHAR(10) NOT NULL PRIMARY KEY,
+    jobTitle varchar(100) NOT NULL,
+    jobStatus ENUM ('In Progress', 'Completed', 'Waiting Parts'),
+    location varchar(100) NOT NULL,
+    jobComments TEXT,
+    createdTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ;

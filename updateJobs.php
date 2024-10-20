@@ -1,17 +1,15 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
-    $jobID = $_POST["jobTitle"];
-    require_once "inc/dbconn.inc.php";
+require_once "Database/db_connect.php"; // Adjust the path if needed
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobID"])) {
+    $jobID = $_POST["jobID"];
 
     // Get current values
-    $currentQuery = "SELECT jobStatus, location, jobComments FROM Jobs WHERE jobID=?";
-    $stmt = mysqli_prepare($conn, $currentQuery);
-    mysqli_stmt_bind_param($stmt, 'i', $jobID);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $currentValues = mysqli_fetch_assoc($result);
-
-    mysqli_stmt_close($stmt);
+    $currentQuery = "SELECT jobStatus, location, jobComments FROM Jobs WHERE jobID=:jobID";
+    $stmt = $pdo->prepare($currentQuery);
+    $stmt->bindParam(':jobID', $jobID, PDO::PARAM_INT);
+    $stmt->execute();
+    $currentValues = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Get new values or use current if empty
     $newJobStatus = !empty($_POST["newJobStatus"]) ? $_POST["newJobStatus"] : $currentValues['jobStatus'];
@@ -19,31 +17,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
     $jobComments = !empty($_POST["jobComments"]) ? $_POST["jobComments"] : $currentValues['jobComments'];
 
     // Update job details
-    $sql = "UPDATE Jobs SET jobStatus=?, location=?, jobComments=? WHERE jobID=?;";
-    $statement = mysqli_stmt_init($conn);
+    $sql = "UPDATE Jobs SET jobStatus=:jobStatus, location=:location, jobComments=:jobComments WHERE jobID=:jobID";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':jobStatus', $newJobStatus, PDO::PARAM_STR);
+    $stmt->bindParam(':location', $newLocation, PDO::PARAM_STR);
+    $stmt->bindParam(':jobComments', $jobComments, PDO::PARAM_STR);
+    $stmt->bindParam(':jobID', $jobID, PDO::PARAM_INT);
 
-
-    if (mysqli_stmt_prepare($statement, $sql)) {
-        mysqli_stmt_bind_param($statement, 'sssi', $newJobStatus, $newLocation, $jobComments, $jobID);
-
-        if (mysqli_stmt_execute($statement)) {
-            header("Location: updateJobs.php");
-        } else {
-            echo "Error updating record: " . mysqli_error($conn);
-        }
+    if ($stmt->execute()) {
+        header("Location: updateJobs.php");
+        exit();
     } else {
-        echo "SQL statement preparation failed.";
+        echo "Error updating record.";
     }
-
-    mysqli_stmt_close($statement);
-    mysqli_close($conn);
 }
+
+// Fetch job data
+$sql = "SELECT jobID, jobTitle, jobStatus, location, createdTime, updatedTime, jobComments FROM Jobs";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Belinda Hok"/>
     <title>Production Operator Jobs</title>
@@ -52,13 +51,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
 
 <body>
     <header>
-        <h1>List of Jobs</h1>
+        <h1>Jobs</h1>
         <div class="notification">
             <img src="images/bell.jpg" alt="Notifications" class="bell-icon">
             <span class="notification-count">2</span>
         </div>
         <div class="user-info">
-            <span>John Smith</span>
+            <span>Brian Wessex</span>
             <span class="user-role">Production Operator</span>
         </div>
     </header>
@@ -77,15 +76,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
 
     <main>
         <div class="container">
-            <h1>Update Jobs</h1>
+            <h2>Update Jobs</h2>
             
             <table id="jobsTable">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Job</th>
                         <th>Status</th>
                         <th>Location</th>
-                        <th>Date</th>
+                        <th>Created Date</th>
+                        <th>Updated Date</th>
                         <th>Comments</th>
                         <th>Action</th>
                     </tr>
@@ -93,51 +94,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
 
                 <tbody>
                     <?php
-                    require_once "inc/dbconn.inc.php";
-
-                    $sql = "SELECT jobID, jobTitle, jobStatus, location, date, jobComments FROM Jobs;";
-
-                    if ($result = mysqli_query($conn, $sql)) {
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row["jobTitle"] ?? '') . "</td>";
-                                $statusClass = "";
-                                switch ($row["jobStatus"]) {
-                                    case 'In Progress':
-                                        $statusClass = "job-status-in-progress";
-                                        break;
-                                    case 'Completed':
-                                        $statusClass = "job-status-completed";
-                                        break;
-                                    case 'Waiting Parts':
-                                        $statusClass = "job-status-waiting-parts";
-                                        break;
-                                }
-                                echo "<td class='$statusClass'>" . htmlspecialchars($row["jobStatus"] ?? '') . "</td>";
-                                echo "<td>" . htmlspecialchars($row["location"] ?? '') . "</td>";
-                                echo "<td>" . htmlspecialchars($row["date"] ?? '') . "</td>";
-                                echo "<td>" . htmlspecialchars($row["jobComments"] ?? '') . "</td>";
-                                echo "<td>
-                                <button class='open-modal' data-id='" . htmlspecialchars($row["jobID"]) . "' data-title='" . htmlspecialchars($row["jobTitle"]) . "'>Update</button>
-                                </td>";
-                                echo "</tr>";
+                    if ($jobs) {
+                        foreach ($jobs as $row) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row["jobID"] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($row["jobTitle"] ?? '') . "</td>";
+                            $statusClass = "";
+                            switch ($row["jobStatus"]) {
+                                case 'In Progress':
+                                    $statusClass = "job-status-in-progress";
+                                    break;
+                                case 'Completed':
+                                    $statusClass = "job-status-completed";
+                                    break;
+                                case 'Waiting Parts':
+                                    $statusClass = "job-status-waiting-parts";
+                                    break;
                             }
-
-                            mysqli_free_result($result);
-                        } 
-
-                        else {
-                            echo "<tr><td colspan='6'>No jobs found.</td></tr>";
-                        } 
+                            echo "<td class='$statusClass'>" . htmlspecialchars($row["jobStatus"] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($row["location"] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($row["createdTime"] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($row["updatedTime"] ?? '') . "</td>";
+                            echo "<td>" . htmlspecialchars($row["jobComments"] ?? '') . "</td>";
+                            echo "<td>
+                            <button class='open-modal' data-id='" . htmlspecialchars($row["jobID"]) . "' data-title='" . htmlspecialchars($row["jobTitle"]) . "'>Update</button>
+                            </td>";
+                            echo "</tr>";
+                        }
                     } else {
-                        echo "Error executing query: " . mysqli_error($conn);
+                        echo "<tr><td colspan='8'>No jobs found.</td></tr>";
                     }
-                    
-                    mysqli_close($conn);
                     ?>
                 </tbody>
             </table>
+
+            <input type="button" value="Create Task Note" class="taskNote" id="btn-note">
         </div>
 
         <div id="myModal" class="modal">
@@ -145,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                 <span class="close">&times;</span>
                 <h2>Update Job</h2>
                 <form id="updateForm" method='post'>
-                    <input type='hidden' name='jobTitle' id='jobTitle'>
+                    <input type='hidden' name='jobID' id='jobID'>
 
                     <label for="updateJobStatus">Status:</label>
                     <select name='newJobStatus' id='newJobStatus'>
@@ -169,28 +160,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
 
 <script>
     let modal = document.getElementById("myModal");
-
     let span = document.getElementsByClassName("close")[0];
-
     let buttons = document.querySelectorAll(".open-modal");
+
+    document.getElementById("btn-note").onclick = function () {
+        location.href = "create_note.php";
+    };
 
     buttons.forEach(function(button) {
         button.onclick = function() {
             let jobID = this.getAttribute("data-id");
             let jobTitle = this.getAttribute("data-title");
 
-            document.getElementById("jobTitle").value = jobID;
+            document.getElementById("jobID").value = jobID;
 
             modal.style.display = "block";
         };
     });
 
-    // When the user clicks on "X", close the modal
     span.onclick = function() {
         modal.style.display = "none";
     };
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";

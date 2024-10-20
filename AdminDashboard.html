@@ -4,7 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrator Dashboard</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 15px;
+        }
+
+        .nav-menu {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .nav-menu li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            background-color: #333;
+            cursor: pointer;
+        }
+
+        .nav-menu li a.active {
+            background-color: #4CAF50;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"], input[type="datetime-local"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+
+        input[type="submit"] {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 
@@ -96,7 +216,6 @@
                 <select id="log-status" required>
                     <option value="Success">Success</option>
                     <option value="Failed">Failed</option>
-                    <option value="In Progress">In Progress</option> <!-- New option added -->
                 </select>
 
                 <label for="log-timestamp">Timestamp</label>
