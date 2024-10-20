@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS factory_logs;
+
+USE factory_logs;
+
 CREATE TABLE IF NOT EXISTS machine_data (
     machine_id VARCHAR(10) NOT NULL,
     machine_name VARCHAR(100) NOT NULL,
