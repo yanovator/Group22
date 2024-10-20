@@ -479,6 +479,9 @@ button[type="submit"]:hover {
     label {
         font-size: 20px;
     }
+    select, .update-button{
+        width: 105%;
+    }
 }
 
 #updateForm{
