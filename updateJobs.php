@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                     <?php
                     require_once "inc/dbconn.inc.php";
 
-                    $sql = "SELECT jobID, jobTitle, jobStatus, location, createdTime, updated, jobComments FROM Jobs;";
+                    $sql = "SELECT jobID, jobTitle, jobStatus, location, createdTime, updatedTime, jobComments FROM Jobs;";
 
                     if ($result = mysqli_query($conn, $sql)) {
                         if (mysqli_num_rows($result) > 0) {
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                                 echo "<td class='$statusClass'>" . htmlspecialchars($row["jobStatus"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["location"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["createdTime"] ?? '') . "</td>";
-                                echo "<td>" . htmlspecialchars($row["updated"] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($row["updatedTime"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["jobComments"] ?? '') . "</td>";
                                 echo "<td>
                                 <button class='open-modal' data-id='" . htmlspecialchars($row["jobID"]) . "' data-title='" . htmlspecialchars($row["jobTitle"]) . "'>Update</button>
