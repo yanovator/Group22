@@ -41,9 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate old password if a new password is provided
     if (!empty($password)) {
         if (!password_verify($old_password, $employee['password'])) {
-            echo "<p>Error: Old password is incorrect.</p>";
+            echo "";
         } elseif ($password !== $confirm_password) {
-            echo "<p>Error: Passwords do not match.</p>";
+            echo "";
         } else {
             // Hash the new password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -56,6 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "UPDATE employees SET name = ?, role = ?, email = ?, password = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssi", $name, $role, $email, $hashed_password, $id);
+
+    // Execute the query and handle the result
+    if ($stmt->execute() === TRUE) {
+        echo "";
+    } else {
+        echo "<p>Error: " . $stmt->error . "</p>";
+    }
 
     $stmt->close();
 }

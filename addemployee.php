@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate that passwords match
     if ($password !== $confirm_password) {
-        echo "<p>Error: Passwords do not match.</p>";
+        echo "";
     } else {
         // Hash the password for security
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -34,6 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Insert employee details into the database
         $sql = "INSERT INTO employees (name, id, role, email, password) VALUES ('$name', '$id', '$role', '$email', '$hashed_password')";
 
+        // Execute the query and handle the result
+        if ($conn->query($sql) === TRUE) {
+            echo "";
+        } else {
+            echo "<p>Error: " . $conn->error . "</p>";
+        }
+
         // Close connection
         $conn->close();
     }
@@ -44,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="Callum Forbes" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Employee</title>
     <link rel="stylesheet" href="./Styles/styles.css">
 </head>
