@@ -1,33 +1,39 @@
 <?php
-session_start(); // Start session for user authentication
+session_start(); // Start session if needed for user authentication
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Collecting the form inputs
     $observation = $_POST['observation'];
     $manager_id = $_POST['manager'];
 
-    // Assuming the user's ID is stored in the session
-    $operator_id = $_SESSION['user_id']; 
-
-    // Connect to the database
+    // Assuming these are fetched from the database (you can modify the query to get them)
     $conn = new mysqli('localhost', 'root', '', 'factory_db');
 
-    // Check the connection
+    // Check if the connection is successful
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Insert task note into database
-    $sql = "INSERT INTO task_notes (observation, operator_id, manager_id) VALUES (?, ?, ?)";
+    // Fetch manager details (name and employee_id) based on manager_id
+    $query = "SELECT name, employee_id FROM users WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $manager_id);
+    $stmt->execute();
+    $stmt->bind_result($manager_name, $employee_id);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Insert the task note into the database
+    $sql = "INSERT INTO task_notes (observation, factory_manager_name, factory_manager_employee_id, created_at) 
+            VALUES (?, ?, ?, NOW())";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sii', $observation, $operator_id, $manager_id);
+    $stmt->bind_param('ssi', $observation, $manager_name, $employee_id);
 
     // Check if the statement was successful
     if ($stmt->execute()) {
         $message = "Task note submitted successfully!";
-        $message_type = "success";
     } else {
         $message = "Oops! Something went wrong. Please try again.";
-        $message_type = "error";
     }
 
     // Close the statement and connection
@@ -50,18 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h1>Submit Task Notes</h1>
 
         <?php if (isset($message)): ?>
-            <div class="message <?php echo $message_type; ?>">
+            <div class="message success">
                 <?php echo $message; ?>
             </div>
-            <script>
-                // Scroll to the message after submission
-                document.addEventListener("DOMContentLoaded", function() {
-                    document.querySelector('.message').scrollIntoView();
-                });
-            </script>
         <?php endif; ?>
 
-        <a href=".php"create_note.php class="btn">Back to Form</a>
+        <a href="create_note.php" class="btn">Back to Form</a>
     </div>
 
 </body>
