@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS machine_data (
 );
 
 CREATE TABLE Jobs(
-    jobID INT AUTO_INCREMENT PRIMARY KEY,
+    jobID VARCHAR(10) NOT NULL PRIMARY KEY,
     jobTitle varchar(100) NOT NULL,
     jobStatus ENUM ('In Progress', 'Completed', 'Waiting Parts'),
     location varchar(100) NOT NULL,

@@ -22,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
     $sql = "UPDATE Jobs SET jobStatus=?, location=?, jobComments=? WHERE jobID=?;";
     $statement = mysqli_stmt_init($conn);
 
-
     if (mysqli_stmt_prepare($statement, $sql)) {
         mysqli_stmt_bind_param($statement, 'sssi', $newJobStatus, $newLocation, $jobComments, $jobID);
 
@@ -82,6 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
             <table id="jobsTable">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Job</th>
                         <th>Status</th>
                         <th>Location</th>
@@ -102,6 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
+                                echo "<td>" . htmlspecialchars($row["jobID"] ?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($row["jobTitle"] ?? '') . "</td>";
                                 $statusClass = "";
                                 switch ($row["jobStatus"]) {
