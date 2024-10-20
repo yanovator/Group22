@@ -52,13 +52,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
 
 <body>
     <header>
-        <h1>List of Jobs</h1>
+        <h1>Jobs</h1>
         <div class="notification">
             <img src="images/bell.jpg" alt="Notifications" class="bell-icon">
             <span class="notification-count">2</span>
         </div>
         <div class="user-info">
-            <span>John Smith</span>
+            <span>Brian Wessex</span>
             <span class="user-role">Production Operator</span>
         </div>
     </header>
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
 
     <main>
         <div class="container">
-            <h1>Update Jobs</h1>
+            <h2>Update Jobs</h2>
             
             <table id="jobsTable">
                 <thead>
@@ -140,6 +140,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
                     ?>
                 </tbody>
             </table>
+
+            <input type="button" value="Create Task Note" class="taskNote" id="btn-note">
         </div>
 
         <div id="myModal" class="modal">
@@ -176,6 +178,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
 
     let buttons = document.querySelectorAll(".open-modal");
 
+    document.getElementById("btn-note").onclick = function () {
+        location.href = "create_note.php";
+    };
+
     buttons.forEach(function(button) {
         button.onclick = function() {
             let jobID = this.getAttribute("data-id");
@@ -187,12 +193,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["jobTitle"])) {
         };
     });
 
-    // When the user clicks on "X", close the modal
     span.onclick = function() {
         modal.style.display = "none";
     };
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";

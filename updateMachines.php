@@ -54,13 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
 
 <body>
     <header>
-        <h1>Update Machines</h1>
+        <h1>Machines</h1>
         <div class="notification">
             <img src="images/bell.jpg" alt="Notifications" class="bell-icon">
             <span class="notification-count">2</span>
         </div>
         <div class="user-info">
-            <span>John Smith</span>
+            <span>Brian Wessex</span>
             <span class="user-role">Production Operator</span>
         </div>
     </header>
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineTitle"])) {
 
     <main>
         <div class="container">
-            <!-- <h1>Update Machines</h1> -->
+            <h2>Update Machines</h2>
             
             <table id="machinesTable">
                 <thead>
