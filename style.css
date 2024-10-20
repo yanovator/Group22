@@ -1,43 +1,170 @@
-/* General body styling */
+/* General page styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f7f9;
     margin: 0;
-    padding: 20px;
+    padding: 0;
     display: flex;
+    background-color: #f9f9f9;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh; /* Ensure content is vertically centered */
+}
+
+/* Wrapper for layout with sidebar */
+.wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Sidebar (navigation) styling */
+.sidebar {
+    background-color: #333;
+    width: 200px;
+    height: 100vh;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.nav-menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    margin-bottom: 20px;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.nav-menu a.active {
+    background-color: #555;
+    border-radius: 5px;
+}
+
+.nav-menu img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
 }
 
 /* Main content styling */
 .main-content {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
+    flex-grow: 1;
+    margin-left: 200px;
+    padding: 20px;
+    padding-top: 80px; /* To ensure content is not hidden under the header */
 }
 
-/* Page heading */
-h1 {
-    color: #333;
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    text-align: center;
+/* Header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fcfcfc;
+    color: rgb(3, 3, 3);
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 200px;
+    right: 0;
+    z-index: 999;
+    height: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow here */
 }
 
-/* Form labels */
-label {
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 10px;
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* Notification styling */
+.notification {
+    position: relative;
+    margin-right: 20px; /* Move notification to the left of Brian Wessex */
+}
+
+.bell-icon {
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+}
+
+.notification-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: red;
+    color: rgb(255, 255, 255);
+    border-radius: 50%;
+    padding: 4px 7px;
+    font-size: 12px;
+}
+
+/* User info section - Adjusting alignment */
+.user-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: right;
+}
+
+.user-info span:first-child {
+    margin-right: 10px;
+}
+
+/* Adjust production operator to be below Brian Wessex */
+.user-role {
     display: block;
+    margin-left: -100px; /* Space between Brian Wessex and Production Operator */
+    color: #7b7979;
+    font-size: 12px;
+    margin-top: 50px;
 }
 
-/* Textarea and select input styles */
-textarea, select {
+/* Styling for the task note form container */
+.task-note-container {
+    background-color: white;
+    padding: 100px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    text-align: left; /* Center text and content inside the form */
+    
+}
+
+/* Center the form box horizontally */
+.main-content .task-note-container {
+    margin:8% auto /* Center the container horizontally */
+}
+
+/* Styling for task note form */
+form {
+    margin-top: 20px;
+    
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Input fields and textarea styling */
+textarea, select, input {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -49,18 +176,94 @@ textarea, select {
 
 /* Submit button styles */
 button {
-    width: 30%; /* Adjusted button size to be smaller */
-    padding: 10px;
-    background-color: #007BFF; /* Blue color */
+    width: 50%;
+    padding: 20px;
+    background-color: #6f7072;
     color: white;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     font-size: 1rem;
-    display: block; /* To allow centering */
-    margin: 30px auto; /* Centers the button horizontally */
+    display: block;
+    margin: 40px auto;
 }
 
 button:hover {
-    background-color: #0056b3; /* Darker blue when hovered */
+    background-color: #38393a;
+}
+
+/* Success message styling */
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+
+/* General styling for body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* Style for the modal overlay */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+}
+
+/* Style for the modal content */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1001;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+/* Style for the modal header */
+.modal h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Style for the modal message */
+.modal p {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Style for the 'OK' button */
+.modal .btn-ok {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal .btn-ok:hover {
+    background-color: #0056b3;
 }
