@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS employee;
+
+USE employee;
+
+CREATE TABLE IF NOT EXISTS employees (
+  id int(8) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  role VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
