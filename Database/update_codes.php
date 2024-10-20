@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':machine_id' => $machineID
         ]);
 
-        header('Location: ../MachineManagement.php');
+        header('Location: ../FactoryManager.php');
         exit();
     }
 }
