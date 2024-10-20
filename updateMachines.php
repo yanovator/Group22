@@ -1,15 +1,15 @@
 <?php
 require_once "Database/db_connect.php"; 
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machine_name"])) {
-    $machineID = $_POST["machine_name"];
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machineID"])) {
+    $machineID = $_POST["machineID"];
     
     // Get current values
     $currentQuery = "SELECT status, machineComments FROM machine_data WHERE machine_id=:machine_id";
-    $stmt = $pdo->prepare($currentQuery);
-    $stmt->bindParam(':machine_id', $machineID, PDO::PARAM_INT);
-    $stmt->execute();
-    $currentValues = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmtCurrent = $pdo->prepare($currentQuery);
+    $stmtCurrent->bindParam(':machine_id', $machineID, PDO::PARAM_INT);
+    $stmtCurrent->execute();
+    $currentValues = $stmtCurrent->fetch(PDO::FETCH_ASSOC);
 
     // Get new values or use current if empty
     $newMachineStatus = !empty($_POST["newMachineStatus"]) ? $_POST["newMachineStatus"] : $currentValues['status'];
@@ -32,9 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["machine_name"])) {
 
 // Fetch machine data
 $sql = "SELECT machine_id, machine_name, status, createdTime, updatedTime, machineComments FROM machine_data";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$machines = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmtSQL = $pdo->prepare($sql);
+$stmtSQL->execute();
+$machines = $stmtSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -130,7 +130,7 @@ $machines = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <span class="close">&times;</span>
                 <h2>Update Machine</h2>
                 <form id="updateForm" method='post'>
-                    <input type='hidden' name='machineTitle' id='machineTitle'>
+                    <input type='hidden' name='machineID' id='machineID'>
 
                     <label for="updateMachineStatus">Status:</label>
                     <select name='newMachineStatus' id='newMachineStatus'>
@@ -151,9 +151,7 @@ $machines = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <script>
     let modal = document.getElementById("myModal");
-
     let span = document.getElementsByClassName("close")[0];
-
     let buttons = document.querySelectorAll(".open-modal");
 
     buttons.forEach(function(button) {
@@ -161,7 +159,7 @@ $machines = $stmt->fetchAll(PDO::FETCH_ASSOC);
             let machineID = this.getAttribute("data-id");
             let machineTitle = this.getAttribute("data-title");
 
-            document.getElementById("machineTitle").value = machineID;
+            document.getElementById("machineID").value = machineID;
 
             modal.style.display = "block";
         };
