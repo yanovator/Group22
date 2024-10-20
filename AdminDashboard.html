@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Dashboard</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+        }
+
+        .notification {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .bell-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 15px;
+        }
+
+        .nav-menu {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .nav-menu li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            background-color: #333;
+            cursor: pointer;
+        }
+
+        .nav-menu li a.active {
+            background-color: #4CAF50;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"], input[type="datetime-local"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+
+        input[type="submit"] {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Cards and factory overview */
+        .overview-cards {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 22%;
+            text-align: center;
+        }
+
+        .card h4 {
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+
+        .card a {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Administrator Dashboard</h1>
+        <div class="notification">
+            <img src="images/bell.jpg" alt="Notifications" class="bell-icon">
+            <span class="notification-count">2</span>
+        </div>
+        <div class="user-info">
+            <span>John Doe</span>
+            <span class="user-role">Administrator</span>
+        </div>
+    </header>
+
+    <nav>
+        <ul class="nav-menu">
+            <li><a class="nav-link active" onclick="showSection('dashboard')">Dashboard</a></li>
+            <li><a class="nav-link" onclick="showSection('user-activity')">User Activity</a></li>
+            <li><a class="nav-link" onclick="showSection('access-logs')">Access Logs</a></li>
+            <li><a class="nav-link" onclick="showSection('factory-overview')">Factory Overview</a></li>
+            <li><a class="nav-link" onclick="showSection('performance-summary')">Performance Summary</a></li>
+            <li><a class="nav-link" onclick="showSection('settings')">Settings</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="active">
+            <h2>Welcome, Administrator</h2>
+            <p>This is your dashboard. You can navigate to other sections using the menu.</p>
+        </section>
+
+        <!-- Factory Overview Section -->
+        <section id="factory-overview">
+            <h3>Factory Overview</h3>
+            <div class="overview-cards">
+                <div class="card">
+                    <h4>Production Output</h4>
+                    <p>Current Output: 1,200 units/day</p>
+                    <p>Monthly Target: 30,000 units</p>
+                    <a href="production-details.html">View Production Details</a>
+                </div>
+                <div class="card">
+                    <h4>Equipment Status</h4>
+                    <p>Operational: 95%</p>
+                    <p>Maintenance Required: 2 Machines</p>
+                    <a href="maintenance.html">View Maintenance Log</a>
+                </div>
+                <div class="card">
+                    <h4>Energy Consumption</h4>
+                    <p>Today's Usage: 450 kWh</p>
+                    <p>Monthly Goal: 12,000 kWh</p>
+                    <a href="energy-usage.html">Energy Usage Details</a>
+                </div>
+                <div class="card">
+                    <h4>Recent Activity</h4>
+                    <p>Last Machine Calibration: 2 hours ago</p>
+                    <p>Shift Completed: Morning Shift</p>
+                    <a href="activity-log.html">View Activity Log</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Summary Section -->
+        <section id="performance-summary">
+            <h3>Factory Performance</h3>
+            <p>Current Efficiency: 88%</p>
+            <p>Production Line Speed: 105 units/hour</p>
+            <p>Downtime: 3 hours this week</p>
+            <a href="performance.html">View Full Performance Report</a>
+        </section>
+
+        <!-- User Activity Monitoring Section -->
+        <section id="user-activity">
+            <h3>User Activity Monitoring</h3>
+
+            <!-- Form to add user activity -->
+            <form id="user-activity-form" onsubmit="addUserActivity(event)">
+                <h4>Add User Activity</h4>
+                <label for="activity-user">User</label>
+                <input type="text" id="activity-user" required>
+
+                <label for="activity-action">Action</label>
+                <input type="text" id="activity-action" required>
+
+                <label for="activity-timestamp">Timestamp</label>
+                <input type="datetime-local" id="activity-timestamp" required>
+
+                <input type="submit" value="Add Activity">
+            </form>
+
+            <table id="user-activity-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Logged in</td>
+                        <td>2024-10-20 08:23:45</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>Uploaded document</td>
+                        <td>2024-10-20 09:15:12</td>
+                    </tr>
+                    <tr>
+                        <td>Mike Brown</td>
+                        <td>Logged out</td>
+                        <td>2024-10-20 09:45:32</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Access Logs Review Section -->
+        <section id="access-logs">
+            <h3>Access Logs</h3>
+
+            <!-- Form to add access log -->
+            <form id="access-log-form" onsubmit="addAccessLog(event)">
+                <h4>Add Access Log</h4>
+                <label for="log-user">User</label>
+                <input type="text" id="log-user" required>
+
+                <label for="log-action">Action</label>
+                <input type="text" id="log-action" required>
+
+                <label for="log-timestamp">Timestamp</label>
+                <input type="datetime-local" id="log-timestamp" required>
+
+                <input type="submit" value="Add Log">
+            </form>
+
+            <table id="access-logs-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Accessed factory data</td>
+                        <td>2024-10-19 10:45:11</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>Updated machine settings</td>
+                        <td>2024-10-19 11:22:09</td>
+                    </tr>
+                    <tr>
+                        <td>Mike Brown</td>
+                        <td>Viewed production report</td>
+                        <td>2024-10-19 12:00:12</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings">
+            <h3>Account Settings</h3>
+            <p>Manage your account preferences here.</p>
+            <a href="account-settings.html">Go to Account Settings</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Factory Monitoring System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('main section');
+            sections.forEach(section => {
+                if (section.id === sectionId) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('onclick').includes(sectionId)) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        function addUserActivity(event) {
+            event.preventDefault();
+
+            const user = document.getElementById('activity-user').value;
+            const action = document.getElementById('activity-action').value;
+            const timestamp = document.getElementById('activity-timestamp').value;
+
+            const table = document.getElementById('user-activity-table').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            const userCell = newRow.insertCell(0);
+            const actionCell = newRow.insertCell(1);
+            const timestampCell = newRow.insertCell(2);
+
+            userCell.textContent = user;
+            actionCell.textContent = action;
+            timestampCell.textContent = timestamp;
+
+            document.getElementById('user-activity-form').reset();
+        }
+
+        function addAccessLog(event) {
+            event.preventDefault();
+
+            const user = document.getElementById('log-user').value;
+            const action = document.getElementById('log-action').value;
+            const timestamp = document.getElementById('log-timestamp').value;
+
+            const table = document.getElementById('access-logs-table').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            const userCell = newRow.insertCell(0);
+            const actionCell = newRow.insertCell(1);
+            const timestampCell = newRow.insertCell(2);
+
+            userCell.textContent = user;
+            actionCell.textContent = action;
+            timestampCell.textContent = timestamp;
+
+            document.getElementById('access-log-form').reset();
+        }
+    </script>
+
+</body>
+</html>
