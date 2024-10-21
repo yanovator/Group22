@@ -84,7 +84,6 @@ header {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow here */
 }
 
-
 header h1 {
     margin: 0;
     font-size: 24px;
@@ -143,18 +142,16 @@ header h1 {
     max-width: 600px;
     width: 100%;
     text-align: left; /* Center text and content inside the form */
-    
 }
 
 /* Center the form box horizontally */
 .main-content .task-note-container {
-    margin:8% auto /* Center the container horizontally */
+    margin: 8% auto; /* Center the container horizontally */
 }
 
 /* Styling for task note form */
 form {
     margin-top: 20px;
-    
 }
 
 h2 {
@@ -163,11 +160,21 @@ h2 {
     color: #333;
 }
 
-/* Input fields and textarea styling */
-textarea, select, input {
+/* Input fields, textarea, and select styling */
+textarea, select, input[type="text"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Additional styling for the search input (search bar above the dropdown) */
+#searchManager {
+    margin-bottom: 10px;
+    padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
     font-size: 1rem;
@@ -202,15 +209,6 @@ button:hover {
     border-radius: 5px;
     text-align: center;
     width: 100%;
-}
-
-
-/* General styling for body */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
 }
 
 /* Style for the modal overlay */
