@@ -34,10 +34,10 @@
     </nav>
 
     <div class="prodOpContainer">
-        <input type="button" value="Factory Performance" class="prodOpNav" id="btn-performance">
-        <input type="button" value="Manage Machines" class="prodOpNav" id="btn-machines">
-        <input type="button" value="Manage Jobs" class="prodOpNav" id="btn-jobs">
-        <input type="button" value="Task Notes" class="prodOpNav" id="btn-notes">
+        <button class="prodOpNav" id="btn-performance">Factory Performance<br>and<br>Job Progress</button>
+        <button class="prodOpNav" id="btn-machines">Manage Machines</button>
+        <button class="prodOpNav" id="btn-jobs">Manage Jobs</button>
+        <button class="prodOpNav" id="btn-notes">Task Notes</button>
     </div>
 </body>
 
@@ -46,12 +46,12 @@
         location.href = "index.php";
     };
 
-    document.getElementById("btn-jobs").onclick = function () {
-    location.href = "updateJobs.php";
-    };
-
     document.getElementById("btn-machines").onclick = function () {
         location.href = "updateMachines.php";
+    };
+
+    document.getElementById("btn-jobs").onclick = function () {
+    location.href = "updateJobs.php";
     };
 
     document.getElementById("btn-notes").onclick = function () {
