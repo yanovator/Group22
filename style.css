@@ -1,66 +1,189 @@
-/* General body styling */
+/* General page styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f7f9;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    background-color: #f9f9f9;
+    font-size: 18px;
+    display: flex; /* Ensure body covers the sidebar and main content without gaps */
+}
+
+/* Wrapper for layout with sidebar */
+.wrapper {
     display: flex;
-    justify-content: center;
+    width: 100%;
+    height: 100vh; /* Ensure full height layout */
+}
+
+/* Sidebar (navigation) styling */
+.sidebar {
+    background-color: #333;
+    width: 200px;
+    padding: 20px 0;
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Keep the sidebar fixed */
+    top: 0;
+    left: 0;
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Remove any default margin */
+}
+
+.nav-menu li {
+    margin-bottom: 20px;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    display: flex;
     align-items: center;
-    min-height: 100vh;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-menu a.active {
+    background-color: #555;
+    border-radius: 5px;
+}
+
+.nav-menu a:hover {
+    background-color: #444;
+    border-radius: 5px;
+}
+
+.nav-menu img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
 }
 
 /* Main content styling */
 .main-content {
-    background-color: #ffffff;
+    flex-grow: 1;
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
+    margin-left: 200px; /* This ensures it aligns right next to the fixed sidebar */
+    background-color: #f0f0f0;
+    height: 100vh; /* Full height for the content */
+    overflow-y: auto;
+    box-sizing: border-box; /* Include padding in width/height calculations */
 }
 
-/* Page heading */
-h1 {
-    color: #333;
-    font-size: 1.8rem;
-    margin-bottom: 20px;
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fcfcfc;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Ensure the header stays on top */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.bell-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Responsive machine status and maintenance tiles */
+.machine-status-tiles-horizontal,
+.maintenance-tiles-horizontal {
+    display: flex;
+    flex-wrap: nowrap; /* Ensure all tiles stay on one line */
+    gap: 10px; /* Space between the tiles */
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.machine-tile {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(24% - 10px); /* Adjust width to fit four tiles in one line */
+    min-width: 150px; /* Minimum width to prevent shrinking too small */
     text-align: center;
 }
 
-/* Form labels */
-label {
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 10px;
-    display: block;
+/* Active machines tile in green */
+.active-tile {
+    background-color: #d4edda; /* Light green background */
 }
 
-/* Textarea and select input styles */
-textarea, select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    color: #333;
-}
-
-/* Submit button styles */
-button {
-    width: 30%; /* Adjusted button size to be smaller */
-    padding: 10px;
-    background-color: #007BFF; /* Blue color */
-    color: white;
-    border: none;
+/* Stat Box for Jobs */
+.stat-box {
+    background-color: white;
+    padding: 40px;
     border-radius: 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    display: block; /* To allow centering */
-    margin: 30px auto; /* Centers the button horizontally */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(30% - 20px);
+    min-width: 200px;
+    text-align: center;
 }
 
-button:hover {
-    background-color: #0056b3; /* Darker blue when hovered */
+/* Responsive job stats */
+.job-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.job-summary-tile {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* Section headings */
+.section-heading,
+.section-subheading {
+    text-align: left;
+    margin: 30px 0;
+}
+
+.section-subheading {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 1024px) {
+    .machine-tile {
+        flex: 1 1 calc(48% - 10px); /* Allow two tiles per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: relative; /* Reset the position to normal on small screens */
+        height: auto; /* Allow sidebar to fit content */
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .machine-tile, .stat-box {
+        flex: 1 1 100%; /* Stack tiles vertically on small screens */
+    }
 }

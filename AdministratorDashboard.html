@@ -4,46 +4,313 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrator Dashboard</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .icons {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .icons i {
+            font-size: 20px;
+            color: white;
+            margin-right: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            text-align: right;
+        }
+
+        .user-info span {
+            display: block;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 15px;
+        }
+
+        .nav-menu {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .nav-menu li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: #333;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            background-color: #4CAF50;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        form {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"], input[type="datetime-local"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Cards and factory overview */
+        .overview-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 22%;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .card h4 {
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+
+        .card a {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        /* Styling for icon groups */
+        .icon-group {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .icon-group i {
+            font-size: 24px;
+            color: #4CAF50;
+            margin: 10px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .icon-group i:hover {
+            color: #388E3C;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .overview-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 80%;
+            }
+
+            .icons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .user-info {
+                position: static;
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            .nav-menu li {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <header>
         <h1>Administrator Dashboard</h1>
+        <div class="icons">
+            <!-- Font Awesome icons for bell, calendar, and employee -->
+            <div style="position: relative;">
+                <i class="fas fa-bell"></i>
+                <span class="notification-count">2</span>
+            </div>
+            <i class="fas fa-calendar-alt"></i>
+            <i class="fas fa-user-tie"></i> <!-- Employee icon -->
+        </div>
         <div class="user-info">
-            <span>Admin User</span>
+            <span>John Doe</span>
             <span class="user-role">Administrator</span>
         </div>
     </header>
 
     <nav>
         <ul class="nav-menu">
-            <li><a class="nav-link active" onclick="showSection('dashboard')">Dashboard</a></li>
-            <li><a class="nav-link" onclick="showSection('user-activity')">User Activity</a></li>
-            <li><a class="nav-link" onclick="showSection('access-logs')">Access Logs</a></li>
-            <li><a class="nav-link" onclick="showSection('settings')">Settings</a></li>
+            <li><a class="nav-link active" onclick="showSection('dashboard')"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a class="nav-link" onclick="showSection('user-activity')"><i class="fas fa-user-plus"></i> User Activity</a></li>
+            <li><a class="nav-link" onclick="showSection('access-logs')"><i class="fas fa-file-alt"></i> Access Logs</a></li>
+            <li><a class="nav-link" onclick="showSection('factory-overview')"><i class="fas fa-industry"></i> Factory Overview</a></li>
+            <li><a class="nav-link" onclick="showSection('performance-summary')"><i class="fas fa-chart-line"></i> Performance Summary</a></li>
+            <li><a class="nav-link" onclick="showSection('settings')"><i class="fas fa-cogs"></i> Settings</a></li>
         </ul>
     </nav>
 
     <main>
         <!-- Dashboard Section -->
         <section id="dashboard" class="active">
-            <h2>Welcome, Administrator</h2>
+            <h2>Welcome, Administrator John Doe</h2>
             <p>This is your dashboard. You can navigate to other sections using the menu.</p>
+            <div class="icon-group">
+                <!-- Additional functional icons -->
+                <i class="fas fa-cogs" title="Settings"></i>
+                <i class="fas fa-chart-line" title="Performance Overview"></i>
+                <i class="fas fa-clipboard-list" title="Logs or Tasks"></i>
+                <i class="fas fa-users" title="Users Management"></i>
+            </div>
         </section>
 
         <!-- User Activity Monitoring Section -->
         <section id="user-activity">
-            <h3>User Activity Monitoring</h3>
+            <h2>User Activity Monitoring</h2>
 
             <!-- Form to add user activity -->
             <form id="user-activity-form" onsubmit="addUserActivity(event)">
                 <h4>Add User Activity</h4>
                 <label for="activity-user">User</label>
-                <input type="text" id="activity-user" required>
+                <input type="text" id="activity-user" placeholder="Enter user name" required>
 
                 <label for="activity-action">Action</label>
-                <input type="text" id="activity-action" required>
+                <input type="text" id="activity-action" placeholder="Enter action performed" required>
 
                 <label for="activity-timestamp">Timestamp</label>
                 <input type="datetime-local" id="activity-timestamp" required>
@@ -81,22 +348,22 @@
 
         <!-- Access Logs Review Section -->
         <section id="access-logs">
-            <h3>Access Logs</h3>
+            <h2>Access Logs</h2>
 
             <!-- Form to add access log -->
             <form id="access-log-form" onsubmit="addAccessLog(event)">
                 <h4>Add Access Log</h4>
                 <label for="log-user">User</label>
-                <input type="text" id="log-user" required>
+                <input type="text" id="log-user" placeholder="Enter user name" required>
 
                 <label for="log-access-type">Access Type</label>
-                <input type="text" id="log-access-type" required>
+                <input type="text" id="log-access-type" placeholder="Enter access type" required>
 
                 <label for="log-status">Status</label>
                 <select id="log-status" required>
+                    <option value="">Select status</option>
                     <option value="Success">Success</option>
                     <option value="Failed">Failed</option>
-                    <option value="In Progress">In Progress</option> <!-- New option added -->
                 </select>
 
                 <label for="log-timestamp">Timestamp</label>
@@ -108,71 +375,139 @@
             <table id="access-logs-table">
                 <thead>
                     <tr>
-                        <th>Date</th>
                         <th>User</th>
                         <th>Access Type</th>
                         <th>Status</th>
+                        <th>Timestamp</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>2024-10-19</td>
                         <td>John Doe</td>
                         <td>Login</td>
                         <td>Success</td>
+                        <td>2024-10-19 10:45:11</td>
                     </tr>
                     <tr>
-                        <td>2024-10-19</td>
                         <td>Jane Smith</td>
                         <td>File Upload</td>
                         <td>Success</td>
+                        <td>2024-10-19 11:22:09</td>
                     </tr>
                     <tr>
-                        <td>2024-10-19</td>
                         <td>Mike Brown</td>
                         <td>Logout</td>
                         <td>Success</td>
+                        <td>2024-10-19 12:00:12</td>
                     </tr>
                 </tbody>
             </table>
         </section>
 
+        <!-- Factory Overview Section -->
+        <section id="factory-overview">
+            <h2>Factory Overview</h2>
+            <div class="overview-cards">
+                <div class="card">
+                    <h4>Production Output</h4>
+                    <p>Current Output: 1,200 units/day</p>
+                    <p>Monthly Target: 30,000 units</p>
+                    <a href="production-details.html">View Production Details</a>
+                </div>
+                <div class="card">
+                    <h4>Equipment Status</h4>
+                    <p>Operational: 95%</p>
+                    <p>Maintenance Required: 2 Machines</p>
+                    <a href="maintenance.html">View Maintenance Log</a>
+                </div>
+                <div class="card">
+                    <h4>Energy Consumption</h4>
+                    <p>Today's Usage: 450 kWh</p>
+                    <p>Monthly Goal: 12,000 kWh</p>
+                    <a href="energy-usage.html">Energy Usage Details</a>
+                </div>
+                <div class="card">
+                    <h4>Recent Activity</h4>
+                    <p>Last Machine Calibration: 2 hours ago</p>
+                    <p>Shift Completed: Morning Shift</p>
+                    <a href="activity-log.html">View Activity Log</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Summary Section -->
+        <section id="performance-summary">
+            <h2>Factory Performance</h2>
+            <p>Current Efficiency: 88%</p>
+            <p>Production Line Speed: 105 units/hour</p>
+            <p>Downtime: 3 hours this week</p>
+            <a href="performance.html">View Full Performance Report</a>
+        </section>
+
         <!-- Settings Section -->
         <section id="settings">
-            <h3>Settings</h3>
-            <p>Settings section under construction.</p>
+            <h2>Account Settings</h2>
+            <p>Manage your account preferences here.</p>
+            <form id="settings-form" onsubmit="updateSettings(event)">
+                <label for="setting-theme">Theme</label>
+                <select id="setting-theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+
+                <label for="setting-notifications">Notifications</label>
+                <select id="setting-notifications">
+                    <option value="enabled">Enabled</option>
+                    <option value="disabled">Disabled</option>
+                </select>
+
+                <input type="submit" value="Update Settings">
+            </form>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Administrator Dashboard</p>
+        <p>&copy; 2024 Factory Monitoring System. All rights reserved.</p>
     </footer>
 
     <script>
         // Function to show the selected section and hide others
         function showSection(sectionId) {
-            const sections = document.querySelectorAll('section');
-            sections.forEach(section => section.classList.remove('active'));
+            const sections = document.querySelectorAll('main section');
+            sections.forEach(section => {
+                if (section.id === sectionId) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
 
             const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => link.classList.remove('active'));
-
-            const selectedSection = document.getElementById(sectionId);
-            selectedSection.classList.add('active');
-            event.target.classList.add('active');
+            navLinks.forEach(link => {
+                if (link.getAttribute('onclick').includes(sectionId)) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
         }
 
         // Function to add user activity
         function addUserActivity(event) {
             event.preventDefault();
 
-            const user = document.getElementById('activity-user').value;
-            const action = document.getElementById('activity-action').value;
+            const user = document.getElementById('activity-user').value.trim();
+            const action = document.getElementById('activity-action').value.trim();
             const timestamp = document.getElementById('activity-timestamp').value;
+
+            if (user === "" || action === "" || timestamp === "") {
+                alert("Please fill in all fields.");
+                return;
+            }
 
             const tableBody = document.querySelector('#user-activity-table tbody');
             const newRow = document.createElement('tr');
-            newRow.innerHTML = `<td>${user}</td><td>${action}</td><td>${timestamp}</td>`;
+            newRow.innerHTML = `<td>${user}</td><td>${action}</td><td>${timestamp.replace('T', ' ')}</td>`;
             tableBody.appendChild(newRow);
 
             document.getElementById('user-activity-form').reset();
@@ -182,17 +517,31 @@
         function addAccessLog(event) {
             event.preventDefault();
 
-            const user = document.getElementById('log-user').value;
-            const accessType = document.getElementById('log-access-type').value;
+            const user = document.getElementById('log-user').value.trim();
+            const accessType = document.getElementById('log-access-type').value.trim();
             const status = document.getElementById('log-status').value;
             const timestamp = document.getElementById('log-timestamp').value;
 
+            if (user === "" || accessType === "" || status === "" || timestamp === "") {
+                alert("Please fill in all fields.");
+                return;
+            }
+
             const tableBody = document.querySelector('#access-logs-table tbody');
             const newRow = document.createElement('tr');
-            newRow.innerHTML = `<td>${timestamp}</td><td>${user}</td><td>${accessType}</td><td>${status}</td>`;
+            newRow.innerHTML = `<td>${user}</td><td>${accessType}</td><td>${status}</td><td>${timestamp.replace('T', ' ')}</td>`;
             tableBody.appendChild(newRow);
 
             document.getElementById('access-log-form').reset();
+        }
+
+        // Function to update settings
+        function updateSettings(event) {
+            event.preventDefault();
+            const theme = document.getElementById('setting-theme').value;
+            const notifications = document.getElementById('setting-notifications').value;
+
+            alert(`Settings updated:\nTheme: ${theme}\nNotifications: ${notifications}`);
         }
     </script>
 

@@ -69,3 +69,4 @@ function showFactoryAlert(message) {
 
 // Automatically refresh factory stats every 10 seconds
 setInterval(autoRefreshFactoryStats, 10000);
+
