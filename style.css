@@ -3,37 +3,34 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
     background-color: #f9f9f9;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Ensure content is vertically centered */
+    font-size: 18px;
+    display: flex; /* Ensure body covers the sidebar and main content without gaps */
 }
 
 /* Wrapper for layout with sidebar */
 .wrapper {
     display: flex;
     width: 100%;
-    height: 100vh;
+    height: 100vh; /* Ensure full height layout */
 }
 
 /* Sidebar (navigation) styling */
 .sidebar {
     background-color: #333;
     width: 200px;
-    height: 100vh;
     padding: 20px 0;
+    height: 100vh;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    position: fixed;
+    position: fixed; /* Keep the sidebar fixed */
     top: 0;
     left: 0;
-    z-index: 1000;
 }
 
 .nav-menu {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0; /* Remove any default margin */
 }
 
 .nav-menu li {
@@ -46,10 +43,16 @@ body {
     display: flex;
     align-items: center;
     padding: 10px;
+    transition: background-color 0.3s ease;
 }
 
 .nav-menu a.active {
     background-color: #555;
+    border-radius: 5px;
+}
+
+.nav-menu a:hover {
+    background-color: #444;
     border-radius: 5px;
 }
 
@@ -62,26 +65,24 @@ body {
 /* Main content styling */
 .main-content {
     flex-grow: 1;
-    margin-left: 200px;
-    padding: 20px;
-    padding-top: 80px; /* To ensure content is not hidden under the header */
+    padding: 40px;
+    margin-left: 200px; /* This ensures it aligns right next to the fixed sidebar */
+    background-color: #f0f0f0;
+    height: 100vh; /* Full height for the content */
+    overflow-y: auto;
+    box-sizing: border-box; /* Include padding in width/height calculations */
 }
 
-/* Header styling */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #fcfcfc;
-    color: rgb(3, 3, 3);
     padding: 20px;
-    position: fixed;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: sticky;
     top: 0;
-    left: 200px;
-    right: 0;
-    z-index: 999;
-    height: 60px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow here */
+    z-index: 100; /* Ensure the header stays on top */
 }
 
 header h1 {
@@ -89,179 +90,100 @@ header h1 {
     font-size: 24px;
 }
 
-/* Notification styling */
-.notification {
-    position: relative;
-    margin-right: 20px; /* Move notification to the left of Brian Wessex */
-}
-
 .bell-icon {
-    width: 35px;
-    height: 35px;
-    background-color: transparent;
+    width: 24px;
+    height: 24px;
 }
 
-.notification-count {
-    position: absolute;
-    top: -8px;
-    right: -10px;
-    background-color: red;
-    color: rgb(255, 255, 255);
-    border-radius: 50%;
-    padding: 4px 7px;
-    font-size: 12px;
-}
-
-/* User info section - Adjusting alignment */
-.user-info {
+/* Responsive machine status and maintenance tiles */
+.machine-status-tiles-horizontal,
+.maintenance-tiles-horizontal {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: right;
-}
-
-.user-info span:first-child {
-    margin-right: 10px;
-}
-
-/* Adjust production operator to be below Brian Wessex */
-.user-role {
-    display: block;
-    margin-left: -100px; /* Space between Brian Wessex and Production Operator */
-    color: #7b7979;
-    font-size: 12px;
-    margin-top: 50px;
-}
-
-/* Styling for the task note form container */
-.task-note-container {
-    background-color: white;
-    padding: 100px;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    width: 100%;
-    text-align: left; /* Center text and content inside the form */
-}
-
-/* Center the form box horizontally */
-.main-content .task-note-container {
-    margin: 8% auto; /* Center the container horizontally */
-}
-
-/* Styling for task note form */
-form {
+    flex-wrap: nowrap; /* Ensure all tiles stay on one line */
+    gap: 10px; /* Space between the tiles */
+    justify-content: space-between;
     margin-top: 20px;
 }
 
-h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-/* Input fields, textarea, and select styling */
-textarea, select, input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    color: #333;
-}
-
-/* Additional styling for the search input (search bar above the dropdown) */
-#searchManager {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    color: #333;
-}
-
-/* Submit button styles */
-button {
-    width: 50%;
-    padding: 20px;
-    background-color: #6f7072;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    display: block;
-    margin: 40px auto;
-}
-
-button:hover {
-    background-color: #38393a;
-}
-
-/* Success message styling */
-.success-message {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
-}
-
-/* Style for the modal overlay */
-.modal-overlay {
-    display: none; /* Hidden by default */
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-}
-
-/* Style for the modal content */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed;
-    z-index: 1001;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
+.machine-tile {
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(24% - 10px); /* Adjust width to fit four tiles in one line */
+    min-width: 150px; /* Minimum width to prevent shrinking too small */
     text-align: center;
 }
 
-/* Style for the modal header */
-.modal h2 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: #333;
+/* Active machines tile in green */
+.active-tile {
+    background-color: #d4edda; /* Light green background */
 }
 
-/* Style for the modal message */
-.modal p {
+/* Stat Box for Jobs */
+.stat-box {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(30% - 20px);
+    min-width: 200px;
+    text-align: center;
+}
+
+/* Responsive job stats */
+.job-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.job-summary-tile {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    color: #555;
+    width: 100%;
 }
 
-/* Style for the 'OK' button */
-.modal .btn-ok {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+/* Section headings */
+.section-heading,
+.section-subheading {
+    text-align: left;
+    margin: 30px 0;
 }
 
-.modal .btn-ok:hover {
-    background-color: #0056b3;
+.section-subheading {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 1024px) {
+    .machine-tile {
+        flex: 1 1 calc(48% - 10px); /* Allow two tiles per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: relative; /* Reset the position to normal on small screens */
+        height: auto; /* Allow sidebar to fit content */
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .machine-tile, .stat-box {
+        flex: 1 1 100%; /* Stack tiles vertically on small screens */
+    }
 }
