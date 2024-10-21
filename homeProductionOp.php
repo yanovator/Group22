@@ -34,7 +34,7 @@
     </nav>
 
     <div class="prodOpContainer">
-        <button class="prodOpNav" id="btn-performance">Factory Performance<br>and<br>Job Progress</button>
+        <button class="prodOpNav" id="btn-performance">Dashboard</button>
         <button class="prodOpNav" id="btn-machines">Manage Machines</button>
         <button class="prodOpNav" id="btn-jobs">Manage Jobs</button>
         <button class="prodOpNav" id="btn-notes">Task Notes</button>
