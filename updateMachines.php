@@ -44,7 +44,7 @@ $machines = $stmtSQL->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Belinda Hok"/>
     <title>Production Operator Machines</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="Styles/styles.css">
 </head>
 
 <body>
